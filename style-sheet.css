@@ -50,7 +50,7 @@ body {
     height: 170px;
     border-radius: 50%;
     border: 1px solid #000000;
-    background-image: url('/picture/profile.jpeg'); /* Default profile picture */
+    background-image: url('/my-portfolio/picture/profile.jpeg'); /* Default profile picture */
     background-size: cover;
     background-position: center;
 }

@@ -3194,7 +3194,7 @@ body {
         flex-wrap: nowrap;
         gap: 10px;
         min-width: 320px; /* Minimum width for mobile */
-        justify-content: center;
+        justify-content: flex-start;
         align-items: flex-start;
         padding: 5px 10px;
     }

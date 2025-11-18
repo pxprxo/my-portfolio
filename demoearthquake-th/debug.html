@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Dropdown</title>
+</head>
+<body>
+    <h1>Dropdown Test</h1>
+    
+    <div>
+        <label>ข้อมูลจาก:</label>
+        <select id="data-source" onchange="testDropdown()">
+            <option value="combined">รวมทุกแหล่งข้อมูล</option>
+            <option value="tmd">กองเฝ้าระวังแผ่นดินไหว</option>
+            <option value="usgs">USGS</option>
+        </select>
+    </div>
+    
+    <div id="output" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc;"></div>
+    
+    <script>
+        function testDropdown() {
+            const select = document.getElementById('data-source');
+            const output = document.getElementById('output');
+            
+            output.innerHTML = `
+                <p>Dropdown changed!</p>
+                <p>Selected value: ${select.value}</p>
+                <p>Time: ${new Date().toLocaleTimeString()}</p>
+            `;
+            
+            console.log('Dropdown changed to:', select.value);
+        }
+        
+        // Test on load
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Page loaded, dropdown element:', document.getElementById('data-source'));
+        });
+    </script>
+</body>
+</html>

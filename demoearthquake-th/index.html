@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=2.0">
+    <title>[Demo] รายงานแผ่นดินไหว ในประเทศไทยและประเทศใกล้เคียง</title>
+    
+    <!-- Critical inline CSS for instant header display -->
+    <style>
+        /* Critical above-the-fold styles for instant header rendering */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: Arial, sans-serif; 
+            background-color: #f5f5f5; 
+            margin: 0; 
+            padding: 0;
+            min-width: 320px;
+        }
+        .container { 
+            width: 100%; 
+            max-width: 1440px; 
+            margin: 0 auto; 
+            background-color: white; 
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            width: 100%;
+            min-height: 150px;
+            background: linear-gradient(to bottom, #530504, #CB140F);
+            color: white;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            padding: 20px 30px;
+            border-bottom: 1px solid #585959;
+            box-sizing: border-box;
+        }
+        .header-main { display: flex; align-items: center; justify-content: flex-start; }
+        .header-logo { 
+            margin-right: 20px; 
+            display: flex; 
+            align-items: center; 
+            flex-shrink: 0; 
+        }
+        .logo { width: 60px; height: 60px; object-fit: contain; }
+        .header-text { display: flex; flex-direction: column; }
+        .header-title { 
+            font-size: 25px; 
+            font-weight: bold; 
+            margin-right: 10px; 
+            line-height: 1.2;
+        }
+        .header-subtitle { 
+            font-size: 14px; 
+            color: rgba(255, 255, 255, 0.8); 
+            margin: 5px 0 0 0; 
+            font-weight: normal; 
+        }
+        .header-contact {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            margin-left: auto;
+            text-align: right;
+            align-self: flex-end;
+        }
+        .contact-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: white;
+            text-align: right;
+        }
+        .contact-links { display: flex; gap: 10px; align-items: center; }
+        .contact-item {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        .contact-icon { width: 24px; height: 24px; margin-right: 8px; border-radius: 2px; }
+        .contact-label { font-size: 14px; color: white; font-weight: 500; text-align: center; }
+        .contact-link { color: white; text-decoration: none; }
+        
+        /* Mobile header optimization */
+        @media screen and (max-width: 767px) {
+            .header {
+                min-height: 100px;
+                padding: 10px 15px;
+                flex-direction: row;
+                align-items: flex-end;
+                justify-content: space-between;
+                gap: 8px;
+                flex-shrink: 0;
+            }
+            .header-contact { display: none; }
+            .header-title { font-size: 18px; }
+        }
+        
+        /* Tablet header optimization */
+        @media screen and (max-width: 1023px) and (min-width: 768px) {
+            .header {
+                min-height: 120px;
+                padding: 15px 20px;
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+            .header-main { width: 100%; justify-content: center; }
+            .header-contact { display: none; }
+            .header-title { font-size: 20px; text-align: center; }
+        }
+        
+        /* Loading state for content area */
+        .content { 
+            display: flex; 
+            width: 100%; 
+            height: calc(100vh - 150px);
+            background-color: #F4F5F3;
+        }
+        @media screen and (max-width: 1023px) {
+            .content { flex-direction: column; height: auto; }
+        }
+        
+        /* Mobile dropdown optimization in critical CSS */
+        @media screen and (max-width: 767px) {
+            /* Ensure dropdowns work on all mobile devices */
+            .dropdown-row {
+                display: block;
+                gap: 5px;
+                margin: 20px 0;
+                padding: 0;
+            }
+            
+            .dropdown-fixed-container {
+                width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                padding: 0 15px;
+                margin: 0 -15px;
+            }
+            
+            .dropdown-inner-wrapper {
+                display: flex;
+                flex-wrap: nowrap;
+                gap: 15px;
+                min-width: 300px;
+                justify-content: center;
+                align-items: flex-start;
+                padding: 5px 10px;
+            }
+            
+            .dropdown-container {
+                flex-shrink: 0;
+                width: 140px;
+                min-width: 140px;
+                position: relative;
+            }
+            
+            .dropdown {
+                width: 140px;
+                height: 42px;
+                position: relative;
+            }
+            
+            .dropdown-select {
+                width: 100%;
+                height: 100%;
+                font-size: 13px;
+                padding: 0 8px;
+                border: none;
+                border-bottom: 1px solid #000;
+                background-color: #F4F5F3;
+                appearance: none;
+            }
+            
+            .dropdown-label {
+                font-size: 9px;
+                position: absolute;
+                top: -8px;
+                left: 8px;
+                background-color: #F4F5F3;
+                padding: 1px 4px;
+                z-index: 1;
+            }
+        }
+        
+        /* iPhone 14 specific adjustments */
+        @media screen and (max-width: 390px) and (min-width: 375px) {
+            .dropdown-row {
+                gap: 12px;
+                padding: 0 15px 5px 15px;
+            }
+            
+            .dropdown-container {
+                width: 135px;
+                min-width: 135px;
+            }
+            
+            .dropdown {
+                width: 135px;
+            }
+        }
+        
+        /* Very small devices */
+        @media screen and (max-width: 375px) {
+            .dropdown-row {
+                gap: 8px;
+                padding: 0 20px 5px 20px;
+            }
+            
+            .dropdown-container {
+                width: 125px;
+                min-width: 125px;
+            }
+            
+            .dropdown {
+                width: 125px;
+                height: 38px;
+            }
+            
+            .dropdown-select {
+                font-size: 11px;
+                padding: 0 5px;
+            }
+            
+            .dropdown-label {
+                font-size: 7px;
+                padding: 1px 2px;
+            }
+        }
+    </style>
+    
+    <!-- Favicon and web logo - use existing logo as fallback -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/picture/Ellipse 3.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/picture/Ellipse 3.png">
+    <link rel="shortcut icon" href="/picture/Ellipse 3.png">
+    <link rel="apple-touch-icon" href="/picture/Ellipse 3.png">
+    <!-- Fallback favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌏</text></svg>">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="styles.css" as="style">
+    <link rel="preload" href="/picture/Ellipse 3.png" as="image">
+    <link rel="preload" href="performance-optimizer.js" as="script">
+    
+    <!-- DNS prefetch for external resources -->
+    <link rel="dns-prefetch" href="//maps.googleapis.com">
+    <link rel="dns-prefetch" href="//earthquake.usgs.gov">
+    <link rel="dns-prefetch" href="//api.allorigins.win">
+    
+    <!-- Load main CSS asynchronously after critical styles -->
+    <link rel="preload" href="styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="styles.css"></noscript>
+</head>
+<body>
+    <!-- Header renders immediately with inline CSS -->
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-main">
+                <div class="header-logo">
+                    <!-- Prioritize logo loading -->
+                    <img src="/picture/Ellipse 3.png" alt="Logo" class="logo" loading="eager" decoding="sync">
+                </div>
+                <div class="header-text">
+                    <h1 class="header-title">รายงานแผ่นดินไหว <br/>ในประเทศไทยและประเทศใกล้เคียง</h1>
+                    <p class="header-subtitle">อ้างอิงจาก usgs.gov และกองเฝ้าระวังแผ่นดินไหว</p>
+                </div>
+            </div>
+            
+            <div class="header-contact">
+                <h3 class="contact-title">ติดตามรายงานแผ่นดินไหวได้ทาง</h3>
+                <div class="contact-links">
+                    <div class="contact-item">
+                        <img src="/picture/line.png" alt="LINE" class="contact-icon" loading="lazy" decoding="async">
+                        <a href="https://line.me/R/ti/p/@060oygir" target="_blank" class="contact-link">
+                            <span class="contact-label">@060oygir</span>
+                        </a>
+                    </div>
+                    <div class="contact-item">
+                        <img src="/picture/telegram.png" alt="Telegram" class="contact-icon" loading="lazy" decoding="async">
+                        <a href="https://t.me/bkkquake" target="_blank" class="contact-link">
+                            <span class="contact-label">t.me/bkkquake</span>
+                        </a>
+                    </div>
+                    <div class="contact-item">
+                        <img src="/picture/discord.png" alt="Discord" class="contact-icon" loading="lazy" decoding="async">
+                        <a href="https://discord.gg/sRZ7w4UjnN" target="_blank" class="contact-link">
+                            <span class="contact-label">#แจ้งเตือนแผ่นดินไหว</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Content Area -->
+        <div class="content mobile-view-list">
+            <!-- List Area -->
+            <aside class="left-section">
+                <h2 class="section-title">แผ่นดินไหวที่อาจส่งผลกระทบต่อประเทศไทย <br/> ที่เกิดขึ้นใน 24 ชั่วโมงล่าสุด</h2>
+                <p id="datetime">วันที่ <span id="date"></span> <span id="time"></span> </p>
+                
+                <div class="dropdown-row">
+                    <div class="dropdown-fixed-container">
+                        <div class="dropdown-inner-wrapper">
+                            <div class="dropdown-container">
+                                <label class="dropdown-label">แหล่งข้อมูล</label>
+                                <div class="dropdown">
+                                    <select id="data-source" class="dropdown-select" onchange="handleDataSourceChange()">
+                                        <option value="combined">รวมทุกแหล่งข้อมูล</option>
+                                        <option value="tmd">กองเฝ้าระวังแผ่นดินไหว</option>
+                                        <option value="usgs">USGS</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="dropdown-container display-option-container">
+                                <label class="dropdown-label">ตัวเลือกแสดงผล</label>
+                                <div class="dropdown">
+                                    <select id="display-option" class="dropdown-select">
+                                        <option value="list">รายการ</option>
+                                        <option value="map">แผนที่</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="earthquake-list-container">
+                    <div class="earthquake-list">
+                    <div class="earthquake-item">
+                        <div class="earthquake-header">
+                            <h3 class="country">ประเทศ: ญี่ปุ่น</h3>
+                        </div>
+                        <div class="earthquake-details">
+                            <div class="detail-column">
+                                <p class="magnitude">ขนาด: 6.5</p>
+                                <p class="depth">ความลึก: 10 กม.</p>
+                            </div>
+                            <div class="detail-column">
+                                <p class="date">วันที่: 20 ส.ค. 2568</p>
+                                <p class="source">แหล่งที่มา: USGS</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="earthquake-item">
+                        <div class="earthquake-header">
+                            <h3 class="country">ประเทศ: อินโดนีเซีย</h3>
+                        </div>
+                        <div class="earthquake-details">
+                            <div class="detail-column">
+                                <p class="magnitude">ขนาด: 5.8</p>
+                                <p class="depth">ความลึก: 25 กม.</p>
+                            </div>
+                            <div class="detail-column">
+                                <p class="date">วันที่: 20 ส.ค. 2568</p>
+                                <p class="source">แหล่งที่มา: กองเฝ้าระวังแผ่นดินไหว</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="earthquake-item">
+                        <div class="earthquake-header">
+                            <h3 class="country">ประเทศ: ฟิลิปปินส์</h3>
+                        </div>
+                        <div class="earthquake-details">
+                            <div class="detail-column">
+                                <p class="magnitude">ขนาด: 4.9</p>
+                                <p class="depth">ความลึก: 15 กม.</p>
+                            </div>
+                            <div class="detail-column">
+                                <p class="date">วันที่: 19 ส.ค. 2568</p>
+                                <p class="source">แหล่งที่มา: USGS</p>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                
+                <!-- Mobile map container - hidden by default, shown when map option selected -->
+                <div class="mobile-map-container">
+                    <div id="mobile-earthquake-map" style="width: 100%; height: 100%;"></div>
+                </div>
+                
+                <!-- Mobile earthquake detail view - hidden by default, shown when earthquake is clicked -->
+                <div class="mobile-detail-container">
+                    <div class="detail-header">
+                        <!-- Remove the detail title -->
+                    </div>
+                    
+                    <div class="detail-earthquake-info">
+                        <div class="detail-earthquake-header">
+                            <h3 class="detail-country" id="detail-country"></h3>
+                        </div>
+                        <div class="detail-earthquake-details">
+                            <div class="detail-info-grid">
+                                <div class="detail-info-item">
+                                    <p class="magnitude">ขนาด: <span id="detail-magnitude"></span></p>
+                                    <p class="depth">ความลึก: <span id="detail-depth"></span></p>
+                                </div>
+                                <div class="detail-info-item">
+                                    <p class="date">วันที่: <span id="detail-date"></span></p>
+                                    <p class="source">แหล่งที่มา: <span id="detail-source"></span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-map-container">
+                        <h4 class="detail-map-title">ตำแหน่งแผ่นดินไหว</h4>
+                        <div id="detail-earthquake-map" style="width: 100%; height: 300px;"></div>
+                    </div>
+                    
+                    <div class="detail-back-button-container">
+                        <button class="back-button" onclick="showEarthquakeList()">
+                            กลับ
+                        </button>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Map -->
+            <main class="right-section">
+                <div class="map-container">
+                    <div id="earthquake-map" style="width: 100%; height: 100%;"></div>
+                </div>
+            </main>
+        </div>
+        
+        <!-- Footer for mobile contact details -->
+        <footer class="footer">
+            <div class="footer-contact">
+                <h3 class="contact-title">ติดตามรายงานแผ่นดินไหวได้ทาง</h3>
+                <div class="contact-links">
+                    <div class="contact-item">
+                        <img src="/picture/line.png" alt="LINE" class="contact-icon" loading="lazy" decoding="async">
+                        <a href="https://line.me/R/ti/p/@060oygir" target="_blank" class="contact-link">
+                            <span class="contact-label">@060oygir</span>
+                        </a>
+                    </div>
+                    <div class="contact-item">
+                        <img src="/picture/telegram.png" alt="Telegram" class="contact-icon" loading="lazy" decoding="async">
+                        <a href="https://t.me/bkkquake" target="_blank" class="contact-link">
+                            <span class="contact-label">t.me/bkkquake</span>
+                        </a>
+                    </div>
+                    <div class="contact-item">
+                        <img src="/picture/discord.png" alt="Discord" class="contact-icon" loading="lazy" decoding="async">
+                        <a href="https://discord.gg/sRZ7w4UjnN" target="_blank" class="contact-link">
+                            <span class="contact-label">#แจ้งเตือนแผ่นดินไหว</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Load performance optimizer first but non-blocking -->
+    <script>
+        // Inline critical performance optimization
+        if (window.innerWidth < 768) {
+            document.documentElement.style.setProperty('--animation-duration', '0.2s');
+        }
+        
+        // Load scripts asynchronously after header renders
+        function loadScripts() {
+            const scripts = [
+                'performance-optimizer.js',
+                'tablet-support.js', 
+                'mobile-sharing.js',
+                'fast-loader.js',
+                'script.js'
+            ];
+            
+            scripts.forEach((src, index) => {
+                setTimeout(() => {
+                    const script = document.createElement('script');
+                    script.src = src;
+                    script.async = true;
+                    document.head.appendChild(script);
+                }, index * 50); // Stagger loading
+            });
+        }
+        
+        // Load scripts after DOM content loads
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', loadScripts);
+        } else {
+            loadScripts();
+        }
+    </script>
+    
+    <!-- Google Maps API with optimized loading -->
+    <script>
+        // Load Google Maps API only when needed and after other scripts
+        function loadGoogleMaps() {
+            if (!window.google) {
+                const script = document.createElement('script');
+                script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyABDs5eRtgzAovW_DZ1uw_y3eglRxT43PQ&callback=initMapAndData&loading=async';
+                script.async = true;
+                script.defer = true;
+                document.head.appendChild(script);
+            }
+        }
+        
+        // Delay maps loading to prioritize header rendering
+        setTimeout(() => {
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', () => {
+                    setTimeout(loadGoogleMaps, 1000);
+                });
+            } else {
+                setTimeout(loadGoogleMaps, 1000);
+            }
+        }, 100);
+    </script>
+</body>
+</html>

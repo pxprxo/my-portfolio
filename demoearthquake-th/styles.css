@@ -89,7 +89,7 @@ img.lazy-load.loaded {
     
     /* Center dropdown containers on mobile and fix alignment */
     .dropdown-row {
-        justify-content: center; /* Center align for mobile version */
+        
         gap: 15px; /* Smaller gap on mobile */
         flex-wrap: nowrap; /* Prevent wrapping on mobile */
         overflow-x: auto; /* Allow horizontal scroll if needed */

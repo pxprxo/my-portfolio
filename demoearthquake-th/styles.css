@@ -356,6 +356,8 @@ body {
     -webkit-overflow-scrolling: touch;
     padding: 0 10px;
     box-sizing: border-box;
+    margin-left: 0;
+    margin-right: auto;
 }
 
 .dropdown-inner-wrapper {

@@ -363,10 +363,9 @@ body {
     flex-wrap: nowrap; /* Force no wrapping */
     gap: 15px;
     min-width: 320px; /* Minimum width to accommodate both dropdowns */
-    justify-content: flex-start; 
     align-items: flex-start; 
     padding: 5px 0;
-    -webkit-justify-content: flex-start;
+    -webkit-align-items: flex-start;
     margin-left: 0;
     margin-right: auto;
 }
@@ -3194,9 +3193,9 @@ body {
         flex-wrap: nowrap;
         gap: 10px;
         min-width: 320px; /* Minimum width for mobile */
-        justify-content: flex-start;
         align-items: flex-start;
         padding: 5px 10px;
+        -webkit-align-items: flex-start;
     }
     
     .dropdown-container {

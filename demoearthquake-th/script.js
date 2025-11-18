@@ -1621,7 +1621,7 @@ function showEarthquakeDetail(earthquake, index) {
                             <button onclick="shareMobileDetailToLine()" 
                                     class="mobile-detail-share-button line-share"
                                     title="แชร์ไปยัง Line">
-                                <img src="/picture/line.png" alt="Line" class="mobile-detail-share-icon" onerror="this.style.backgroundColor='#00c300'; this.alt='L';">
+                                <img src="/my-portfolio/demoearthquake-th/picture/line.png" alt="Line" class="mobile-detail-share-icon" onerror="this.style.backgroundColor='#00c300'; this.alt='L';">
                             </button>
                         </div>
                     </div>

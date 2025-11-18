@@ -364,6 +364,9 @@ body {
     justify-content: flex-start; 
     align-items: flex-start; 
     padding: 5px 0;
+    -webkit-justify-content: flex-start;
+    margin-left: 0;
+    margin-right: auto;
 }
 
 .dropdown-container {

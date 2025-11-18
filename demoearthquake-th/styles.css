@@ -334,10 +334,6 @@ body {
     margin-top: 20px;
 }
 
-/* ========================================
-   WEB VERSION DROPDOWN MENU STYLES
-   ======================================== */
-
 /* Main dropdown container row for web version */
 .dropdown-row {
     display: flex;
@@ -365,7 +361,7 @@ body {
     flex-wrap: nowrap;
     gap: 15px;
     min-width: 320px;
-    justify-content: center;
+    justify-content: left;
     align-items: flex-start;
     padding: 5px 0;
 }

@@ -334,6 +334,2538 @@ body {
     margin-top: 20px;
 }
 
+/* ========================================
+   WEB VERSION DROPDOWN MENU STYLES
+   ======================================== */
+
+/* Main dropdown container row for web version */
+.dropdown-row {
+    display: flex;
+    gap: 50px; /* Large gap for web version spacing */
+    margin-top: 20px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    justify-content: flex-start; /* Left align for web version */
+    align-items: flex-start;
+}
+
+/* Web version dropdown wrapper containers */
+.dropdown-fixed-container {
+    width: 100%;
+    min-width: 320px;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+.dropdown-inner-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 15px;
+    min-width: 320px;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 5px 0;
+}
+
+/* Individual dropdown container for web */
+.dropdown-container {
+    position: relative;
+    margin: 0px;
+    width: 160px; /* Fixed width for web version */
+}
+
+/* Web version dropdown styling */
+.dropdown {
+    position: relative;
+    width: 190px; /* Larger width for web */
+    height: 45px; /* Standard height for web */
+}
+
+/* Web version dropdown select styling */
+.dropdown-select {
+    width: 100%;
+    height: 100%;
+    background-color: #F4F5F3;
+    border: none;
+    border-bottom: 1px solid #000; /* Underline style for web */
+    border-radius: 0;
+    padding: 0 12px;
+    font-size: 15px; /* Readable font size for web */
+    color: #2c3e50;
+    appearance: none;
+    cursor: pointer;
+    box-shadow: none;
+    transition: all 0.2s ease;
+}
+
+/* Web version dropdown interactions */
+.dropdown-select:hover {
+    background-color: #dee2e6;
+}
+
+.dropdown-select:focus {
+    outline: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Web version dropdown labels */
+.dropdown-label {
+    font-size: 10px;
+    color: #2c3e50;
+    position: absolute;
+    top: -8px;
+    left: 8px;
+    background-color: #F4F5F3;
+    padding: 2px 6px;
+    z-index: 1;
+    white-space: nowrap;
+}
+
+/* Custom dropdown arrow for web version */
+.dropdown::after {
+    content: '▼';
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    font-size: 12px;
+    color: #2c3e50;
+    pointer-events: none;
+}
+
+/* Display option dropdown specific styling for web */
+.display-option-container .dropdown {
+    width: 160px; /* Slightly smaller for display options */
+}
+
+/* Placeholder dropdown styling for web */
+.dropdown-placeholder .dropdown-select {
+    background-color: #e9ecef;
+    color: #6c757d;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.dropdown-placeholder .dropdown-label {
+    color: #6c757d;
+}
+
+/* ========================================
+   END WEB VERSION DROPDOWN STYLES
+   ======================================== */
+
+/* Optimize image rendering */
+img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    overflow-x: auto;
+    min-width: 1024px;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+.container {
+    width: 100%;
+    max-width: 1440px;
+    min-width: 1024px;
+    margin: 0 auto;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    width: 100%;
+    min-height: 150px;
+    background: linear-gradient(to bottom, #530504, #CB140F);
+    color: white;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 20px 30px;
+    border-bottom: 1px solid #585959;
+    box-sizing: border-box;
+}
+
+/* Footer for mobile contact details */
+.footer {
+    width: 100%;
+    background: linear-gradient(to bottom, #530504, #CB140F);
+    color: white;
+    padding: 15px 20px;
+    border-top: 1px solid #585959;
+    display: none; /* Hidden by default, shown on mobile */
+    box-sizing: border-box;
+}
+
+.footer-contact {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    gap: 15px;
+}
+
+.footer-contact .contact-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 0;
+    margin-right: 15px;
+    color: white;
+}
+
+.footer-contact .contact-links {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.header-main {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.content {
+    display: flex;
+    width: 100%;
+    height: calc(100vh - 150px);
+}
+
+.left-section {
+    width: 40%;
+    min-width: 450px;
+    max-width: 580px;
+    height: 100%;
+    background-color: #F4F5F3;
+    border-right: 1px solid #515151;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.earthquake-list-container {
+    flex: 1;
+    overflow-y: auto;
+    margin-top: 20px;
+    padding-right: 10px;
+    max-height: calc(100vh - 320px); /* Account for header, dropdown, and padding */
+}
+
+.earthquake-list-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.earthquake-list-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.earthquake-list-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.earthquake-list-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.right-section {
+    flex: 1;
+    height: 100%;
+    background-color: #F4F5F3;
+    padding: 0;
+    overflow: hidden;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+#datetime {
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+}
+
+.header-title {
+    font-size: 25px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.header-logo {
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.logo {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+}
+
+.content-placeholder {
+    background-color: #f8f9fa;
+    border: 2px dashed #dee2e6;
+    border-radius: 8px;
+    padding: 40px;
+    text-align: center;
+    color: #6c757d;
+    margin-top: 20px;
+}
+
+/* Hide display options dropdown on desktop/tablet - show only on mobile */
+@media screen and (min-width: 768px) {
+    .display-option-container {
+        display: none;
+    }
+}
+
+/* Optimize image rendering */
+img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    overflow-x: auto;
+    min-width: 1024px;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+.container {
+    width: 100%;
+    max-width: 1440px;
+    min-width: 1024px;
+    margin: 0 auto;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    width: 100%;
+    min-height: 150px;
+    background: linear-gradient(to bottom, #530504, #CB140F);
+    color: white;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 20px 30px;
+    border-bottom: 1px solid #585959;
+    box-sizing: border-box;
+}
+
+/* Footer for mobile contact details */
+.footer {
+    width: 100%;
+    background: linear-gradient(to bottom, #530504, #CB140F);
+    color: white;
+    padding: 15px 20px;
+    border-top: 1px solid #585959;
+    display: none; /* Hidden by default, shown on mobile */
+    box-sizing: border-box;
+}
+
+.footer-contact {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    gap: 15px;
+}
+
+.footer-contact .contact-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 0;
+    margin-right: 15px;
+    color: white;
+}
+
+.footer-contact .contact-links {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.header-main {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.content {
+    display: flex;
+    width: 100%;
+    height: calc(100vh - 150px);
+}
+
+.left-section {
+    width: 40%;
+    min-width: 450px;
+    max-width: 580px;
+    height: 100%;
+    background-color: #F4F5F3;
+    border-right: 1px solid #515151;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.earthquake-list-container {
+    flex: 1;
+    overflow-y: auto;
+    margin-top: 20px;
+    padding-right: 10px;
+    max-height: calc(100vh - 320px); /* Account for header, dropdown, and padding */
+}
+
+.earthquake-list-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.earthquake-list-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.earthquake-list-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.earthquake-list-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.right-section {
+    flex: 1;
+    height: 100%;
+    background-color: #F4F5F3;
+    padding: 0;
+    overflow: hidden;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+#datetime {
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+}
+
+.header-title {
+    font-size: 25px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.header-logo {
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.logo {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+}
+
+.content-placeholder {
+    background-color: #f8f9fa;
+    border: 2px dashed #dee2e6;
+    border-radius: 8px;
+    padding: 40px;
+    text-align: center;
+    color: #6c757d;
+    margin-top: 20px;
+}
+
+/* Hide display options dropdown on desktop/tablet - show only on mobile */
+@media screen and (min-width: 768px) {
+    .display-option-container {
+        display: none;
+    }
+}
+
+/* Optimize image rendering */
+img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    overflow-x: auto;
+    min-width: 1024px;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+.container {
+    width: 100%;
+    max-width: 1440px;
+    min-width: 1024px;
+    margin: 0 auto;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    width: 100%;
+    min-height: 150px;
+    background: linear-gradient(to bottom, #530504, #CB140F);
+    color: white;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 20px 30px;
+    border-bottom: 1px solid #585959;
+    box-sizing: border-box;
+}
+
+/* Footer for mobile contact details */
+.footer {
+    width: 100%;
+    background: linear-gradient(to bottom, #530504, #CB140F);
+    color: white;
+    padding: 15px 20px;
+    border-top: 1px solid #585959;
+    display: none; /* Hidden by default, shown on mobile */
+    box-sizing: border-box;
+}
+
+.footer-contact {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    gap: 15px;
+}
+
+.footer-contact .contact-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 0;
+    margin-right: 15px;
+    color: white;
+}
+
+.footer-contact .contact-links {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.header-main {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.content {
+    display: flex;
+    width: 100%;
+    height: calc(100vh - 150px);
+}
+
+.left-section {
+    width: 40%;
+    min-width: 450px;
+    max-width: 580px;
+    height: 100%;
+    background-color: #F4F5F3;
+    border-right: 1px solid #515151;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.earthquake-list-container {
+    flex: 1;
+    overflow-y: auto;
+    margin-top: 20px;
+    padding-right: 10px;
+    max-height: calc(100vh - 320px); /* Account for header, dropdown, and padding */
+}
+
+.earthquake-list-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.earthquake-list-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.earthquake-list-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.earthquake-list-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.right-section {
+    flex: 1;
+    height: 100%;
+    background-color: #F4F5F3;
+    padding: 0;
+    overflow: hidden;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+#datetime {
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+}
+
+.header-title {
+    font-size: 25px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.header-logo {
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.logo {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+}
+
+.content-placeholder {
+    background-color: #f8f9fa;
+    border: 2px dashed #dee2e6;
+    border-radius: 8px;
+    padding: 40px;
+    text-align: center;
+    color: #6c757d;
+    margin-top: 20px;
+}
+
+/* ========================================
+   WEB VERSION DROPDOWN MENU STYLES
+   ======================================== */
+
+/* Main dropdown container row for web version */
+.dropdown-row {
+    display: flex;
+    gap: 50px; /* Large gap for web version spacing */
+    margin-top: 20px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    justify-content: flex-start; /* Left align for web version */
+    align-items: flex-start;
+}
+
+/* Web version dropdown wrapper containers */
+.dropdown-fixed-container {
+    width: 100%;
+    min-width: 320px;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+.dropdown-inner-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 15px;
+    min-width: 320px;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 5px 0;
+}
+
+/* Individual dropdown container for web */
+.dropdown-container {
+    position: relative;
+    margin: 0px;
+    width: 160px; /* Fixed width for web version */
+}
+
+/* Web version dropdown styling */
+.dropdown {
+    position: relative;
+    width: 190px; /* Larger width for web */
+    height: 45px; /* Standard height for web */
+}
+
+/* Web version dropdown select styling */
+.dropdown-select {
+    width: 100%;
+    height: 100%;
+    background-color: #F4F5F3;
+    border: none;
+    border-bottom: 1px solid #000; /* Underline style for web */
+    border-radius: 0;
+    padding: 0 12px;
+    font-size: 15px; /* Readable font size for web */
+    color: #2c3e50;
+    appearance: none;
+    cursor: pointer;
+    box-shadow: none;
+    transition: all 0.2s ease;
+}
+
+/* Web version dropdown interactions */
+.dropdown-select:hover {
+    background-color: #dee2e6;
+}
+
+.dropdown-select:focus {
+    outline: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Web version dropdown labels */
+.dropdown-label {
+    font-size: 10px;
+    color: #2c3e50;
+    position: absolute;
+    top: -8px;
+    left: 8px;
+    background-color: #F4F5F3;
+    padding: 2px 6px;
+    z-index: 1;
+    white-space: nowrap;
+}
+
+/* Custom dropdown arrow for web version */
+.dropdown::after {
+    content: '▼';
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    font-size: 12px;
+    color: #2c3e50;
+    pointer-events: none;
+}
+
+/* Display option dropdown specific styling for web */
+.display-option-container .dropdown {
+    width: 160px; /* Slightly smaller for display options */
+}
+
+/* Placeholder dropdown styling for web */
+.dropdown-placeholder .dropdown-select {
+    background-color: #e9ecef;
+    color: #6c757d;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.dropdown-placeholder .dropdown-label {
+    color: #6c757d;
+}
+
+/* ========================================
+   END WEB VERSION DROPDOWN STYLES
+   ======================================== */
+
+/* Optimize image rendering */
+img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    overflow-x: auto;
+    min-width: 1024px;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+.container {
+    width: 100%;
+    max-width: 1440px;
+    min-width: 1024px;
+    margin: 0 auto;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    width: 100%;
+    min-height: 150px;
+    background: linear-gradient(to bottom, #530504, #CB140F);
+    color: white;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 20px 30px;
+    border-bottom: 1px solid #585959;
+    box-sizing: border-box;
+}
+
+/* Footer for mobile contact details */
+.footer {
+    width: 100%;
+    background: linear-gradient(to bottom, #530504, #CB140F);
+    color: white;
+    padding: 15px 20px;
+    border-top: 1px solid #585959;
+    display: none; /* Hidden by default, shown on mobile */
+    box-sizing: border-box;
+}
+
+.footer-contact {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    gap: 15px;
+}
+
+.footer-contact .contact-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 0;
+    margin-right: 15px;
+    color: white;
+}
+
+.footer-contact .contact-links {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.header-main {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.content {
+    display: flex;
+    width: 100%;
+    height: calc(100vh - 150px);
+}
+
+.left-section {
+    width: 40%;
+    min-width: 450px;
+    max-width: 580px;
+    height: 100%;
+    background-color: #F4F5F3;
+    border-right: 1px solid #515151;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.earthquake-list-container {
+    flex: 1;
+    overflow-y: auto;
+    margin-top: 20px;
+    padding-right: 10px;
+    max-height: calc(100vh - 320px); /* Account for header, dropdown, and padding */
+}
+
+.earthquake-list-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.earthquake-list-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.earthquake-list-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.earthquake-list-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.right-section {
+    flex: 1;
+    height: 100%;
+    background-color: #F4F5F3;
+    padding: 0;
+    overflow: hidden;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+#datetime {
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+}
+
+.header-title {
+    font-size: 25px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.header-logo {
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.logo {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+}
+
+.content-placeholder {
+    background-color: #f8f9fa;
+    border: 2px dashed #dee2e6;
+    border-radius: 8px;
+    padding: 40px;
+    text-align: center;
+    color: #6c757d;
+    margin-top: 20px;
+}
+
+/* Hide display options dropdown on desktop/tablet - show only on mobile */
+@media screen and (min-width: 768px) {
+    .display-option-container {
+        display: none;
+    }
+}
+
+/* Optimize image rendering */
+img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    overflow-x: auto;
+    min-width: 1024px;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+.container {
+    width: 100%;
+    max-width: 1440px;
+    min-width: 1024px;
+    margin: 0 auto;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    width: 100%;
+    min-height: 150px;
+    background: linear-gradient(to bottom, #530504, #CB140F);
+    color: white;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 20px 30px;
+    border-bottom: 1px solid #585959;
+    box-sizing: border-box;
+}
+
+/* Footer for mobile contact details */
+.footer {
+    width: 100%;
+    background: linear-gradient(to bottom, #530504, #CB140F);
+    color: white;
+    padding: 15px 20px;
+    border-top: 1px solid #585959;
+    display: none; /* Hidden by default, shown on mobile */
+    box-sizing: border-box;
+}
+
+.footer-contact {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    gap: 15px;
+}
+
+.footer-contact .contact-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 0;
+    margin-right: 15px;
+    color: white;
+}
+
+.footer-contact .contact-links {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.header-main {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.content {
+    display: flex;
+    width: 100%;
+    height: calc(100vh - 150px);
+}
+
+.left-section {
+    width: 40%;
+    min-width: 450px;
+    max-width: 580px;
+    height: 100%;
+    background-color: #F4F5F3;
+    border-right: 1px solid #515151;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.earthquake-list-container {
+    flex: 1;
+    overflow-y: auto;
+    margin-top: 20px;
+    padding-right: 10px;
+    max-height: calc(100vh - 320px); /* Account for header, dropdown, and padding */
+}
+
+.earthquake-list-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.earthquake-list-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.earthquake-list-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.earthquake-list-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.right-section {
+    flex: 1;
+    height: 100%;
+    background-color: #F4F5F3;
+    padding: 0;
+    overflow: hidden;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+#datetime {
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+}
+
+.header-title {
+    font-size: 25px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.header-logo {
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.logo {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+}
+
+.content-placeholder {
+    background-color: #f8f9fa;
+    border: 2px dashed #dee2e6;
+    border-radius: 8px;
+    padding: 40px;
+    text-align: center;
+    color: #6c757d;
+    margin-top: 20px;
+}
+
+/* ========================================
+   WEB VERSION DROPDOWN MENU STYLES
+   ======================================== */
+
+/* Main dropdown container row for web version */
+.dropdown-row {
+    display: flex;
+    gap: 50px; /* Large gap for web version spacing */
+    margin-top: 20px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    justify-content: flex-start; /* Left align for web version */
+    align-items: flex-start;
+}
+
+/* Web version dropdown wrapper containers */
+.dropdown-fixed-container {
+    width: 100%;
+    min-width: 320px;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+.dropdown-inner-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 15px;
+    min-width: 320px;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 5px 0;
+}
+
+/* Individual dropdown container for web */
+.dropdown-container {
+    position: relative;
+    margin: 0px;
+    width: 160px; /* Fixed width for web version */
+}
+
+/* Web version dropdown styling */
+.dropdown {
+    position: relative;
+    width: 190px; /* Larger width for web */
+    height: 45px; /* Standard height for web */
+}
+
+/* Web version dropdown select styling */
+.dropdown-select {
+    width: 100%;
+    height: 100%;
+    background-color: #F4F5F3;
+    border: none;
+    border-bottom: 1px solid #000; /* Underline style for web */
+    border-radius: 0;
+    padding: 0 12px;
+    font-size: 15px; /* Readable font size for web */
+    color: #2c3e50;
+    appearance: none;
+    cursor: pointer;
+    box-shadow: none;
+    transition: all 0.2s ease;
+}
+
+/* Web version dropdown interactions */
+.dropdown-select:hover {
+    background-color: #dee2e6;
+}
+
+.dropdown-select:focus {
+    outline: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Web version dropdown labels */
+.dropdown-label {
+    font-size: 10px;
+    color: #2c3e50;
+    position: absolute;
+    top: -8px;
+    left: 8px;
+    background-color: #F4F5F3;
+    padding: 2px 6px;
+    z-index: 1;
+    white-space: nowrap;
+}
+
+/* Custom dropdown arrow for web version */
+.dropdown::after {
+    content: '▼';
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    font-size: 12px;
+    color: #2c3e50;
+    pointer-events: none;
+}
+
+/* Display option dropdown specific styling for web */
+.display-option-container .dropdown {
+    width: 160px; /* Slightly smaller for display options */
+}
+
+/* Placeholder dropdown styling for web */
+.dropdown-placeholder .dropdown-select {
+    background-color: #e9ecef;
+    color: #6c757d;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.dropdown-placeholder .dropdown-label {
+    color: #6c757d;
+}
+
+/* ========================================
+   END WEB VERSION DROPDOWN STYLES
+   ======================================== */
+
+/* Optimize image rendering */
+img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    overflow-x: auto;
+    min-width: 1024px;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+.container {
+    width: 100%;
+    max-width: 1440px;
+    min-width: 1024px;
+    margin: 0 auto;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    width: 100%;
+    min-height: 150px;
+    background: linear-gradient(to bottom, #530504, #CB140F);
+    color: white;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 20px 30px;
+    border-bottom: 1px solid #585959;
+    box-sizing: border-box;
+}
+
+/* Footer for mobile contact details */
+.footer {
+    width: 100%;
+    background: linear-gradient(to bottom, #530504, #CB140F);
+    color: white;
+    padding: 15px 20px;
+    border-top: 1px solid #585959;
+    display: none; /* Hidden by default, shown on mobile */
+    box-sizing: border-box;
+}
+
+.footer-contact {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    gap: 15px;
+}
+
+.footer-contact .contact-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 0;
+    margin-right: 15px;
+    color: white;
+}
+
+.footer-contact .contact-links {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.header-main {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.content {
+    display: flex;
+    width: 100%;
+    height: calc(100vh - 150px);
+}
+
+.left-section {
+    width: 40%;
+    min-width: 450px;
+    max-width: 580px;
+    height: 100%;
+    background-color: #F4F5F3;
+    border-right: 1px solid #515151;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.earthquake-list-container {
+    flex: 1;
+    overflow-y: auto;
+    margin-top: 20px;
+    padding-right: 10px;
+    max-height: calc(100vh - 320px); /* Account for header, dropdown, and padding */
+}
+
+.earthquake-list-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.earthquake-list-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.earthquake-list-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.earthquake-list-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.right-section {
+    flex: 1;
+    height: 100%;
+    background-color: #F4F5F3;
+    padding: 0;
+    overflow: hidden;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+#datetime {
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+}
+
+.header-title {
+    font-size: 25px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.header-logo {
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.logo {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+}
+
+.content-placeholder {
+    background-color: #f8f9fa;
+    border: 2px dashed #dee2e6;
+    border-radius: 8px;
+    padding: 40px;
+    text-align: center;
+    color: #6c757d;
+    margin-top: 20px;
+}
+
+/* Hide display options dropdown on desktop/tablet - show only on mobile */
+@media screen and (min-width: 768px) {
+    .display-option-container {
+        display: none;
+    }
+}
+
+/* Optimize image rendering */
+img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    overflow-x: auto;
+    min-width: 1024px;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+.container {
+    width: 100%;
+    max-width: 1440px;
+    min-width: 1024px;
+    margin: 0 auto;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    width: 100%;
+    min-height: 150px;
+    background: linear-gradient(to bottom, #530504, #CB140F);
+    color: white;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 20px 30px;
+    border-bottom: 1px solid #585959;
+    box-sizing: border-box;
+}
+
+/* Footer for mobile contact details */
+.footer {
+    width: 100%;
+    background: linear-gradient(to bottom, #530504, #CB140F);
+    color: white;
+    padding: 15px 20px;
+    border-top: 1px solid #585959;
+    display: none; /* Hidden by default, shown on mobile */
+    box-sizing: border-box;
+}
+
+.footer-contact {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    gap: 15px;
+}
+
+.footer-contact .contact-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 0;
+    margin-right: 15px;
+    color: white;
+}
+
+.footer-contact .contact-links {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.header-main {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.content {
+    display: flex;
+    width: 100%;
+    height: calc(100vh - 150px);
+}
+
+.left-section {
+    width: 40%;
+    min-width: 450px;
+    max-width: 580px;
+    height: 100%;
+    background-color: #F4F5F3;
+    border-right: 1px solid #515151;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.earthquake-list-container {
+    flex: 1;
+    overflow-y: auto;
+    margin-top: 20px;
+    padding-right: 10px;
+    max-height: calc(100vh - 320px); /* Account for header, dropdown, and padding */
+}
+
+.earthquake-list-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.earthquake-list-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.earthquake-list-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.earthquake-list-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.right-section {
+    flex: 1;
+    height: 100%;
+    background-color: #F4F5F3;
+    padding: 0;
+    overflow: hidden;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+#datetime {
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+}
+
+.header-title {
+    font-size: 25px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.header-logo {
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.logo {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+}
+
+.content-placeholder {
+    background-color: #f8f9fa;
+    border: 2px dashed #dee2e6;
+    border-radius: 8px;
+    padding: 40px;
+    text-align: center;
+    color: #6c757d;
+    margin-top: 20px;
+}
+
+/* Hide display options dropdown on desktop/tablet - show only on mobile */
+@media screen and (min-width: 768px) {
+    .display-option-container {
+        display: none;
+    }
+}
+
+/* Optimize image rendering */
+img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    overflow-x: auto;
+    min-width: 1024px;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+.container {
+    width: 100%;
+    max-width: 1440px;
+    min-width: 1024px;
+    margin: 0 auto;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    width: 100%;
+    min-height: 150px;
+    background: linear-gradient(to bottom, #530504, #CB140F);
+    color: white;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 20px 30px;
+    border-bottom: 1px solid #585959;
+    box-sizing: border-box;
+}
+
+/* Footer for mobile contact details */
+.footer {
+    width: 100%;
+    background: linear-gradient(to bottom, #530504, #CB140F);
+    color: white;
+    padding: 15px 20px;
+    border-top: 1px solid #585959;
+    display: none; /* Hidden by default, shown on mobile */
+    box-sizing: border-box;
+}
+
+.footer-contact {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    gap: 15px;
+}
+
+.footer-contact .contact-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 0;
+    margin-right: 15px;
+    color: white;
+}
+
+.footer-contact .contact-links {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.header-main {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.content {
+    display: flex;
+    width: 100%;
+    height: calc(100vh - 150px);
+}
+
+.left-section {
+    width: 40%;
+    min-width: 450px;
+    max-width: 580px;
+    height: 100%;
+    background-color: #F4F5F3;
+    border-right: 1px solid #515151;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.earthquake-list-container {
+    flex: 1;
+    overflow-y: auto;
+    margin-top: 20px;
+    padding-right: 10px;
+    max-height: calc(100vh - 320px); /* Account for header, dropdown, and padding */
+}
+
+.earthquake-list-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.earthquake-list-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.earthquake-list-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.earthquake-list-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.right-section {
+    flex: 1;
+    height: 100%;
+    background-color: #F4F5F3;
+    padding: 0;
+    overflow: hidden;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+#datetime {
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+}
+
+.header-title {
+    font-size: 25px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.header-logo {
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.logo {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+}
+
+.content-placeholder {
+    background-color: #f8f9fa;
+    border: 2px dashed #dee2e6;
+    border-radius: 8px;
+    padding: 40px;
+    text-align: center;
+    color: #6c757d;
+    margin-top: 20px;
+}
+
+/* ========================================
+   WEB VERSION DROPDOWN MENU STYLES
+   ======================================== */
+
+/* Main dropdown container row for web version */
+.dropdown-row {
+    display: flex;
+    gap: 50px; /* Large gap for web version spacing */
+    margin-top: 20px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    justify-content: flex-start; /* Left align for web version */
+    align-items: flex-start;
+}
+
+/* Web version dropdown wrapper containers */
+.dropdown-fixed-container {
+    width: 100%;
+    min-width: 320px;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+.dropdown-inner-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 15px;
+    min-width: 320px;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 5px 0;
+}
+
+/* Individual dropdown container for web */
+.dropdown-container {
+    position: relative;
+    margin: 0px;
+    width: 160px; /* Fixed width for web version */
+}
+
+/* Web version dropdown styling */
+.dropdown {
+    position: relative;
+    width: 190px; /* Larger width for web */
+    height: 45px; /* Standard height for web */
+}
+
+/* Web version dropdown select styling */
+.dropdown-select {
+    width: 100%;
+    height: 100%;
+    background-color: #F4F5F3;
+    border: none;
+    border-bottom: 1px solid #000; /* Underline style for web */
+    border-radius: 0;
+    padding: 0 12px;
+    font-size: 15px; /* Readable font size for web */
+    color: #2c3e50;
+    appearance: none;
+    cursor: pointer;
+    box-shadow: none;
+    transition: all 0.2s ease;
+}
+
+/* Web version dropdown interactions */
+.dropdown-select:hover {
+    background-color: #dee2e6;
+}
+
+.dropdown-select:focus {
+    outline: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Web version dropdown labels */
+.dropdown-label {
+    font-size: 10px;
+    color: #2c3e50;
+    position: absolute;
+    top: -8px;
+    left: 8px;
+    background-color: #F4F5F3;
+    padding: 2px 6px;
+    z-index: 1;
+    white-space: nowrap;
+}
+
+/* Custom dropdown arrow for web version */
+.dropdown::after {
+    content: '▼';
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    font-size: 12px;
+    color: #2c3e50;
+    pointer-events: none;
+}
+
+/* Display option dropdown specific styling for web */
+.display-option-container .dropdown {
+    width: 160px; /* Slightly smaller for display options */
+}
+
+/* Placeholder dropdown styling for web */
+.dropdown-placeholder .dropdown-select {
+    background-color: #e9ecef;
+    color: #6c757d;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.dropdown-placeholder .dropdown-label {
+    color: #6c757d;
+}
+
+/* ========================================
+   END WEB VERSION DROPDOWN STYLES
+   ======================================== */
+
+/* Optimize image rendering */
+img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    overflow-x: auto;
+    min-width: 1024px;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+.container {
+    width: 100%;
+    max-width: 1440px;
+    min-width: 1024px;
+    margin: 0 auto;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    width: 100%;
+    min-height: 150px;
+    background: linear-gradient(to bottom, #530504, #CB140F);
+    color: white;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 20px 30px;
+    border-bottom: 1px solid #585959;
+    box-sizing: border-box;
+}
+
+/* Footer for mobile contact details */
+.footer {
+    width: 100%;
+    background: linear-gradient(to bottom, #530504, #CB140F);
+    color: white;
+    padding: 15px 20px;
+    border-top: 1px solid #585959;
+    display: none; /* Hidden by default, shown on mobile */
+    box-sizing: border-box;
+}
+
+.footer-contact {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    gap: 15px;
+}
+
+.footer-contact .contact-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 0;
+    margin-right: 15px;
+    color: white;
+}
+
+.footer-contact .contact-links {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.header-main {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.content {
+    display: flex;
+    width: 100%;
+    height: calc(100vh - 150px);
+}
+
+.left-section {
+    width: 40%;
+    min-width: 450px;
+    max-width: 580px;
+    height: 100%;
+    background-color: #F4F5F3;
+    border-right: 1px solid #515151;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.earthquake-list-container {
+    flex: 1;
+    overflow-y: auto;
+    margin-top: 20px;
+    padding-right: 10px;
+    max-height: calc(100vh - 320px); /* Account for header, dropdown, and padding */
+}
+
+.earthquake-list-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.earthquake-list-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.earthquake-list-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.earthquake-list-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.right-section {
+    flex: 1;
+    height: 100%;
+    background-color: #F4F5F3;
+    padding: 0;
+    overflow: hidden;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+#datetime {
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+}
+
+.header-title {
+    font-size: 25px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.header-logo {
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.logo {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+}
+
+.content-placeholder {
+    background-color: #f8f9fa;
+    border: 2px dashed #dee2e6;
+    border-radius: 8px;
+    padding: 40px;
+    text-align: center;
+    color: #6c757d;
+    margin-top: 20px;
+}
+
+/* Hide display options dropdown on desktop/tablet - show only on mobile */
+@media screen and (min-width: 768px) {
+    .display-option-container {
+        display: none;
+    }
+}
+
+/* Optimize image rendering */
+img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    overflow-x: auto;
+    min-width: 1024px;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+.container {
+    width: 100%;
+    max-width: 1440px;
+    min-width: 1024px;
+    margin: 0 auto;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    width: 100%;
+    min-height: 150px;
+    background: linear-gradient(to bottom, #530504, #CB140F);
+    color: white;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 20px 30px;
+    border-bottom: 1px solid #585959;
+    box-sizing: border-box;
+}
+
+/* Footer for mobile contact details */
+.footer {
+    width: 100%;
+    background: linear-gradient(to bottom, #530504, #CB140F);
+    color: white;
+    padding: 15px 20px;
+    border-top: 1px solid #585959;
+    display: none; /* Hidden by default, shown on mobile */
+    box-sizing: border-box;
+}
+
+.footer-contact {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    gap: 15px;
+}
+
+.footer-contact .contact-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 0;
+    margin-right: 15px;
+    color: white;
+}
+
+.footer-contact .contact-links {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.header-main {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.content {
+    display: flex;
+    width: 100%;
+    height: calc(100vh - 150px);
+}
+
+.left-section {
+    width: 40%;
+    min-width: 450px;
+    max-width: 580px;
+    height: 100%;
+    background-color: #F4F5F3;
+    border-right: 1px solid #515151;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.earthquake-list-container {
+    flex: 1;
+    overflow-y: auto;
+    margin-top: 20px;
+    padding-right: 10px;
+    max-height: calc(100vh - 320px); /* Account for header, dropdown, and padding */
+}
+
+.earthquake-list-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.earthquake-list-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.earthquake-list-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.earthquake-list-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.right-section {
+    flex: 1;
+    height: 100%;
+    background-color: #F4F5F3;
+    padding: 0;
+    overflow: hidden;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+#datetime {
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+}
+
+.header-title {
+    font-size: 25px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.header-logo {
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.logo {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+}
+
+.content-placeholder {
+    background-color: #f8f9fa;
+    border: 2px dashed #dee2e6;
+    border-radius: 8px;
+    padding: 40px;
+    text-align: center;
+    color: #6c757d;
+    margin-top: 20px;
+}
+
+/* Hide display options dropdown on desktop/tablet - show only on mobile */
+@media screen and (min-width: 768px) {
+    .display-option-container {
+        display: none;
+    }
+}
+
+/* Optimize image rendering */
+img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    overflow-x: auto;
+    min-width: 1024px;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+.container {
+    width: 100%;
+    max-width: 1440px;
+    min-width: 1024px;
+    margin: 0 auto;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    width: 100%;
+    min-height: 150px;
+    background: linear-gradient(to bottom, #530504, #CB140F);
+    color: white;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 20px 30px;
+    border-bottom: 1px solid #585959;
+    box-sizing: border-box;
+}
+
+/* Footer for mobile contact details */
+.footer {
+    width: 100%;
+    background: linear-gradient(to bottom, #530504, #CB140F);
+    color: white;
+    padding: 15px 20px;
+    border-top: 1px solid #585959;
+    display: none; /* Hidden by default, shown on mobile */
+    box-sizing: border-box;
+}
+
+.footer-contact {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    gap: 15px;
+}
+
+.footer-contact .contact-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 0;
+    margin-right: 15px;
+    color: white;
+}
+
+.footer-contact .contact-links {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.header-main {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.content {
+    display: flex;
+    width: 100%;
+    height: calc(100vh - 150px);
+}
+
+.left-section {
+    width: 40%;
+    min-width: 450px;
+    max-width: 580px;
+    height: 100%;
+    background-color: #F4F5F3;
+    border-right: 1px solid #515151;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.earthquake-list-container {
+    flex: 1;
+    overflow-y: auto;
+    margin-top: 20px;
+    padding-right: 10px;
+    max-height: calc(100vh - 320px); /* Account for header, dropdown, and padding */
+}
+
+.earthquake-list-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.earthquake-list-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.earthquake-list-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.earthquake-list-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.right-section {
+    flex: 1;
+    height: 100%;
+    background-color: #F4F5F3;
+    padding: 0;
+    overflow: hidden;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+#datetime {
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+}
+
+.header-title {
+    font-size: 25px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.header-logo {
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.logo {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+}
+
+.content-placeholder {
+    background-color: #f8f9fa;
+    border: 2px dashed #dee2e6;
+    border-radius: 8px;
+    padding: 40px;
+    text-align: center;
+    color: #6c757d;
+    margin-top: 20px;
+}
+
 /* Dropdown Styles */
 .dropdown-row {
     display: flex;
@@ -361,7 +2893,7 @@ body {
     flex-wrap: nowrap; /* Force no wrapping */
     gap: 15px;
     min-width: 320px; /* Minimum width to accommodate both dropdowns */
-    
+    justify-content: center;
     align-items: flex-start;
     padding: 5px 0;
 }
@@ -369,7 +2901,7 @@ body {
 .dropdown-container {
     position: relative;
     margin: 0px;
-    width: 160px;
+    width: 160px; /* Fixed width for web version */
 }
 
 .dropdown-label {
@@ -386,8 +2918,8 @@ body {
 
 .dropdown {
     position: relative;
-    width: 190px;
-    height: 45px;
+    width: 190px; /* Larger width for web */
+    height: 45px; /* Standard height for web */
 }
 
 .dropdown-select {
@@ -395,10 +2927,10 @@ body {
     height: 100%;
     background-color: #F4F5F3;
     border: none;
-    border-bottom: 1px solid #000;
+    border-bottom: 1px solid #000; /* Underline style for web */
     border-radius: 0;
     padding: 0 12px;
-    font-size: 15px;
+    font-size: 15px; /* Readable font size for web */
     color: #2c3e50;
     appearance: none;
     cursor: pointer;
@@ -413,18 +2945,6 @@ body {
 .dropdown-select:focus {
     outline: none;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* Placeholder dropdown styling */
-.dropdown-placeholder .dropdown-select {
-    background-color: #e9ecef;
-    color: #6c757d;
-    cursor: not-allowed;
-    opacity: 0.7;
-}
-
-.dropdown-placeholder .dropdown-label {
-    color: #6c757d;
 }
 
 /* Custom dropdown arrow */
@@ -1654,1518 +4174,7 @@ body {
     display: none;
 }
 
-/* Mobile specific adjustments for inline share buttons */
-@media (max-width: 480px) {
-    .source-share-row {
-        gap: 6px;
-    }
-    
-    .mobile-detail-share-section {
-        gap: 6px;
-    }
-    
-    .mobile-detail-share-label {
-        font-size: 13px;
-    }
-    
-    .mobile-detail-share-buttons {
-        gap: 4px;
-    }
-    
-    .mobile-detail-share-button {
-        width: 26px;
-        height: 26px;
-        border: none;
-        border-radius: 4px;
-    }
-    
-    .mobile-detail-share-icon {
-        width: 25px;
-        height: 25px;
-        object-fit: contain;
-        display: block;
-        border-radius: 4px;
-    }
-}
-
-/* Detail map container matching earthquake info styling */
-.detail-map-container {
-    background-color: #F4F5F3;
-    border: 1px solid #dee2e6;
-    border-radius: 0;
-    margin-bottom: 20px;
-    padding: 15px;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.detail-map-header {
-    margin: -15px -15px 10px -15px;
-    border-bottom: 1px solid #e9ecef;
-    padding: 4px 15px;
-    width: calc(100% + 30px);
-    background-color: #6A0806;
-    height: 34px;
-    display: flex;
-    align-items: center;
-}
-
-.map-title {
-    font-size: 15px;
-    font-weight: bold;
-    color: #FFFFFF;
-    background-color: transparent;
-    margin: 0;
-    text-align: left;
-    padding: 0;
-    border-radius: 0;
-    height: auto;
-    display: block;
-}
-
-.detail-map-content {
-    padding: 0;
-    margin-top: 10px;
-}
-
-#detail-earthquake-map {
-    width: 100%;
-    height: 300px;
-    border: none;
-    border-radius: 4px;
-    overflow: hidden;
-}
-
-/* Detail back button container styling */
-.detail-back-button-container {
-    background-color: transparent;
-    border: none;
-    border-radius: 0;
-    margin-bottom: 20px;
-    padding: 0;
-    width: 100%;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-}
-
-.detail-back-button {
-    background-color: #6A0806;
-    color: #FFFFFF !important;
-    padding: 8px 16px;
-    border-radius: 4px;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    display: inline-block;
-    border: 1px solid #6A0806;
-    text-decoration: none;
-}
-
-.detail-back-button:hover {
-    background-color: #8B0A08;
-    color: #FFE0DF !important;
-    transform: scale(1.05);
-    transition: all 0.2s ease;
-    border-color: #8B0A08;
-}
-
-/* Standardize all detail text to 14px - preserve sharing button and icon sizes */
-.detail-earthquake-details p {
-    font-size: 14px !important;
-}
-
-.detail-earthquake-details .depth {
-    color: #6c757d;
-    font-size: 14px;
-}
-
-.detail-earthquake-details .magnitude {
-    font-size: 14px !important;
-}
-
-.detail-earthquake-details .date {
-    font-size: 14px !important;
-}
-
-.detail-earthquake-details .source {
-    font-size: 14px !important;
-}
-
-.detail-earthquake-details .mobile-detail-share-label {
-    font-size: 14px !important;
-}
-
-/* Standardize detail-info-vertical text sizes to 14px */
-.detail-info-vertical p {
-    font-size: 14px !important;
-}
-
-.detail-info-vertical .magnitude {
-    font-size: 14px !important;
-}
-
-.detail-info-vertical .date {
-    font-size: 14px !important;
-}
-
-.detail-info-vertical .depth {
-    font-size: 14px !important;
-}
-
-.detail-info-vertical .source {
-    font-size: 14px !important;
-}
-
-.detail-info-vertical .mobile-detail-share-label {
-    font-size: 14px !important;
-}
-
-/* Mobile (320px - 767px) */
-@media screen and (max-width: 767px) {
-    body {
-        min-width: 320px;
-        overflow-x: hidden;
-        overflow-y: auto; /* Allow vertical scrolling */
-        -webkit-text-size-adjust: 100%;
-        -moz-text-size-adjust: 100%;
-        -ms-text-size-adjust: 100%;
-        text-size-adjust: 100%;
-    }
-    
-    .container {
-        min-width: 320px;
-        max-width: 100%;
-        margin: 0;
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-    }
-    
-    .header {
-        min-height: 100px;
-        padding: 10px 15px;
-        flex-direction: row;
-        align-items: flex-end;
-        justify-content: space-between;
-        gap: 8px;
-        flex-shrink: 0;
-    }
-    
-    .header-logo {
-        margin-right: 20px;
-        margin-bottom: 0;
-        display: flex;
-        align-items: center;
-        flex-shrink: 0;
-    }
-    
-    .header-text {
-        align-items: flex-start;
-        text-align: left;
-    }
-    
-    .header-contact {
-        display: none; /* Hide header contacts on mobile */
-    }
-    
-    .content {
-        flex: 1;
-        flex-direction: column;
-        display: flex;
-        overflow: hidden;
-    }
-    
-    .left-section {
-        width: 100%;
-        min-width: 100%;
-        max-width: 100%;
-        flex: 1;
-        border-right: none;
-        border-bottom: none;
-        padding: 15px;
-        display: flex;
-        flex-direction: column;
-        overflow: hidden;
-    }
-    
-    /* Mobile view states - keep header content, replace only list area */
-    .mobile-view-list .left-section {
-        padding: 15px 15px;
-    }
-    
-    .mobile-view-list .earthquake-list-container {
-        display: block !important;
-        margin-left: 0;
-        margin-right: 0;
-        padding-left: 0;
-        padding-right: 0;
-    }
-    
-    .earthquake-list-container {
-        flex: 1;
-        overflow-y: auto;
-        margin-top: 20px;
-        padding-right: 10px;
-        padding-bottom: 20px; /* Add padding to prevent footer overlap */
-        margin-bottom: 0;
-    }
-    
-    /* Mobile view states - keep header content, replace only list area */
-    .mobile-view-list .earthquake-list-container {
-        display: block !important;
-    }
-    
-    .mobile-view-list .mobile-map-container {
-        display: none !important;
-    }
-    
-    .mobile-view-map .earthquake-list-container {
-        display: none !important;
-    }
-    
-    .mobile-view-map .mobile-map-container {
-        display: flex !important;
-        flex: 1;
-        overflow: hidden;
-        margin-top: 20px;
-        height: calc(100vh - 250px); /* Increase height to fill more space */
-        min-height: 500px; /* Increase minimum height */
-    }
-    
-    .footer {
-        display: block; /* Show footer on mobile */
-        padding: 12px 15px;
-        flex-shrink: 0;
-        margin-top: auto;
-    }
-    
-    .footer-contact {
-        flex-direction: column;
-        gap: 5px;
-        align-items: center;
-    }
-    
-    .footer-contact .contact-title {
-        margin-right: 0;
-        margin-bottom: 8px;
-        font-size: 15px;
-        text-align: center;
-    }
-    
-    .footer-contact .contact-links {
-        flex-direction: row;
-        gap: 5px;
-        justify-content: center;
-        width: 100%;
-        max-width: 300px;
-    }
-    
-    .footer-contact .contact-item {
-        padding: 4px;
-        background-color: transparent;
-        border-radius: 0;
-        margin: 0;
-        flex: 1;
-        max-width: 100px;
-        min-width: 100px;
-        flex-direction: column; /* Stack icon above text */
-        text-align: center;
-    }
-    
-    .footer-contact .contact-icon {
-        width: 28px;
-        height: 28px;
-        margin-right: 0; /* Remove right margin */
-        margin-bottom: 4px; /* Add bottom margin */
-    }
-    
-    .footer-contact .contact-label {
-        font-size: 11px;
-        line-height: 1.3;
-        text-align: center; /* Center align text */
-    }
-    
-    /* Mobile view states - add detail view */
-    .mobile-view-detail .earthquake-list-container {
-        display: none !important;
-    }
-    
-    .mobile-view-detail .mobile-map-container {
-        display: none !important;
-    }
-    
-    .mobile-view-detail .mobile-detail-container {
-        display: flex !important;
-    }
-    
-    /* Hide dropdown menus in mobile detail view */
-    .mobile-view-detail .dropdown-row {
-        display: none !important;
-    }
-    
-    .section-title {
-        font-size: 16px;
-        -webkit-text-size-adjust: 100%;
-        -moz-text-size-adjust: 100%;
-        -ms-text-size-adjust: 100%;
-        text-size-adjust: 100%;
-    }
-    
-    /* Enhanced mobile-view-list content font sizes */
-    .mobile-view-list .section-title {
-        font-size: 16px;
-    }
-    
-    .mobile-view-list .earthquake-item {
-        font-size: 15px;
-    }
-    
-    .mobile-view-list .earthquake-item .country {
-        font-size: 16px;
-    }
-    
-    .mobile-view-list .earthquake-item .detail-column p {
-        font-size: 15px;
-    }
-    
-    .mobile-view-list .earthquake-item .magnitude,
-    .mobile-view-list .earthquake-item .date {
-        font-size: 15px;
-    }
-    
-    .mobile-view-list .earthquake-item .depth,
-    .mobile-view-list .earthquake-item .source {
-        font-size: 15px;
-    }
-}
-
-/* Very Small Mobile (320px - 480px) */
-@media screen and (max-width: 480px) {
-    .header-title {
-        font-size: 18px;
-        -webkit-text-size-adjust: 100%;
-        -moz-text-size-adjust: 100%;
-        -ms-text-size-adjust: 100%;
-        text-size-adjust: 100%;
-    }
-    
-    .container {
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-    }
-    
-    .content {
-        flex: 1;
-        overflow: hidden;
-    }
-    
-    .left-section {
-        flex: 1;
-        overflow: hidden;
-    }
-    
-    .earthquake-list-container {
-        flex: 1;
-        overflow-y: auto;
-        padding-bottom: 30px; /* Extra padding for very small screens */
-    }
-    
-    .footer {
-        padding: 10px 15px; /* Reduce footer padding */
-        flex-shrink: 0;
-    }
-    
-    .footer-contact {
-        flex-direction: column;
-        gap: 8px;
-        align-items: center;
-    }
-    
-    .footer-contact .contact-title {
-        margin-right: 0;
-        margin-bottom: 8px;
-        font-size: 14px;
-        text-align: center;
-    }
-    
-    .footer-contact .contact-links {
-        flex-direction: row;
-        gap: 5px;
-        justify-content: center;
-        width: 100%;
-    }
-    
-    .footer-contact .contact-item {
-        padding: 3px;
-        background-color: transparent;
-        border-radius: 0;
-        margin: 0;
-        flex: 1;
-        max-width: 110px;
-        min-width: 90px;
-        flex-direction: column; /* Stack icon above text */
-        text-align: center;
-    }
-    
-    .footer-contact .contact-icon {
-        width: 20px;
-        height: 20px;
-        margin-right: 0; /* Remove right margin */
-        margin-bottom: 3px; /* Add bottom margin */
-    }
-    
-    .footer-contact .contact-label {
-        font-size: 10px;
-        line-height: 1.2;
-        text-align: center; /* Center align text */
-    }
-    
-    .mobile-view-map .mobile-map-container {
-        height: calc(100vh - 220px); /* Adjust for smaller screens */
-        min-height: 450px;
-    }
-    
-    .detail-info-grid {
-        display: flex;
-        gap: 0px;
-        width: 100%;
-    }
-    
-    .detail-info-item:first-child {
-        max-width: 50%;
-    }
-    
-    .detail-info-item:last-child {
-        max-width: 50%;
-        margin-left: -20px;
-    }
-    
-    .detail-label,
-    .detail-value {
-        font-size: 12px;
-        margin: 3px 0;
-    }
-    
-    .detail-title {
-        font-size: 16px;
-    }
-    
-    .back-button {
-        padding: 6px 12px;
-        font-size: 13px;
-    }
-    
-    #detail-earthquake-map {
-        height: 250px;
-    }
-}
-
-/* Mobile earthquake detail view - hidden by default */
-.mobile-detail-container {
-    width:  100%;
-    background-color: #F4F5F3;
-    display: none; /* Hidden by default */
-    flex-direction: column;
-    flex: 1;
-    overflow-y: auto;
-    margin-top: 20px;
-    padding-bottom: 20px;
-}
-
-.detail-header {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #dee2e6;
-}
-
-.detail-title {
-    font-size: 18px;
-    font-weight: bold;
-    color: #2c3e50;
-    margin: 0;
-}
-
-/* Make detail earthquake info look exactly like earthquake list items */
-.detail-earthquake-info {
-    background-color: #F4F5F3;
-    border: 1px solid #dee2e6;
-    border-radius: 0;
-    margin-bottom: 20px;
-    padding: 15px;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.detail-earthquake-header {
-    margin: -15px -15px 10px -15px;
-    border-bottom: 1px solid #e9ecef;
-    padding: 4px 15px;
-    width: calc(100% + 30px);
-    background-color: #6A0806;
-    height: 34px;
-    display: flex;
-    align-items: center;
-}
-
-.detail-country {
-    font-size: 15px;
-    font-weight: bold;
-    color: #FFFFFF;
-    background-color: transparent;
-    margin: 0;
-    text-align: left;
-    padding: 0;
-    border-radius: 0;
-    height: auto;
-    display: block;
-}
-
-/* Back arrow styling in detail header */
-.detail-country span[onclick] {
-    color: #FFFFFF !important;
-    cursor: pointer;
-    margin-right: 8px;
-    font-size: 18px;
-    font-weight: bold;
-    user-select: none;
-    transition: all 0.2s ease;
-    display: inline-block;
-    padding: 2px 4px;
-    border-radius: 3px;
-}
-
-.detail-country span[onclick]:hover {
-    color: #FFE0DF !important;
-    background-color: rgba(255, 255, 255, 0.1);
-    transform: scale(1.1);
-    transition: all 0.2s ease;
-}
-
-.detail-country span[onclick]:active {
-    transform: scale(0.95);
-    background-color: rgba(255, 255, 255, 0.2);
-}
-
-.detail-earthquake-details {
-    padding: 0;
-}
-
-.detail-info-grid {
-    display: flex;
-    gap: 0px;
-    width: 100%;
-}
-
-.detail-info-item {
-    flex: 1;
-    text-align: left;
-    max-width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-.detail-info-item:first-child {
-    padding-right: 0px;
-    max-width: 44%;
-}
-
-.detail-info-item:last-child {
-    padding-left: 0;
-    margin-left: -15px;
-    max-width: 65%;
-}
-
-.detail-info-item p {
-    margin: 5px 0;
-    font-size: 14px;
-    color: #495057;
-    line-height: 1.4;
-}
-
-.detail-info-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    margin: 8px 0;
-}
-
-.detail-info-row p {
-    margin: 0;
-    font-size: 14px;
-    color: #495057;
-    line-height: 1.4;
-}
-
-.detail-info-row p.magnitude {
-    font-weight: 600;
-    color: #000;
-    flex: 0 0 auto;
-}
-
-.detail-info-row p.date {
-    font-weight: 600;
-    color: #000;
-    text-align: right;
-    flex: 0 0 auto;
-}
-
-/* Source and sharing row layout */
-.source-share-row {
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    width: 100%;
-    margin: 8px 0;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.source-share-row .source {
-    margin: 0;
-    font-size: 14px;
-    color: #6c757d;
-    line-height: 1.4;
-}
-
-.mobile-detail-share-section {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.mobile-detail-share-label {
-    font-size: 14px;
-    color: #495057;
-    font-weight: 600;
-    white-space: nowrap;
-}
-
-.mobile-detail-share-buttons {
-    display: flex;
-    gap: 6px;
-    align-items: center;
-}
-
-.mobile-detail-share-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 35px;
-    height: 35px;
-    border: none;
-    border-radius: 4px;
-    background-color: transparent;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    padding: 2px;
-}
-
-.mobile-detail-share-button:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.mobile-detail-share-button:active {
-    transform: translateY(0);
-}
-
-.mobile-detail-share-button.facebook-share:hover {
-    background-color: #e7f3ff;
-    border-radius: 4px;
-}
-
-.mobile-detail-share-button.twitter-share:hover {
-    background-color: #f0f0f0;
-    border-radius: 4px;
-}
-
-.mobile-detail-share-button.line-share:hover {
-    background-color: #e8f5e8;
-    border-radius: 4px;
-}
-
-.mobile-detail-share-icon {
-    width: 38px;
-    height: 38px;
-    object-fit: contain;
-    display: block;
-    border-radius: 4px;
-}
-
-/* Remove old mobile detail share styles that are no longer needed */
-.mobile-detail-share {
-    display: none;
-}
-
-.mobile-detail-share-title {
-    display: none;
-}
-
-/* Mobile specific adjustments for inline share buttons */
-@media (max-width: 480px) {
-    .source-share-row {
-        gap: 6px;
-    }
-    
-    .mobile-detail-share-section {
-        gap: 6px;
-    }
-    
-    .mobile-detail-share-label {
-        font-size: 13px;
-    }
-    
-    .mobile-detail-share-buttons {
-        gap: 4px;
-    }
-    
-    .mobile-detail-share-button {
-        width: 26px;
-        height: 26px;
-        border: none;
-        border-radius: 4px;
-    }
-    
-    .mobile-detail-share-icon {
-        width: 25px;
-        height: 25px;
-        object-fit: contain;
-        display: block;
-        border-radius: 4px;
-    }
-}
-
-/* Detail map container matching earthquake info styling */
-.detail-map-container {
-    background-color: #F4F5F3;
-    border: 1px solid #dee2e6;
-    border-radius: 0;
-    margin-bottom: 20px;
-    padding: 15px;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.detail-map-header {
-    margin: -15px -15px 10px -15px;
-    border-bottom: 1px solid #e9ecef;
-    padding: 4px 15px;
-    width: calc(100% + 30px);
-    background-color: #6A0806;
-    height: 34px;
-    display: flex;
-    align-items: center;
-}
-
-.map-title {
-    font-size: 15px;
-    font-weight: bold;
-    color: #FFFFFF;
-    background-color: transparent;
-    margin: 0;
-    text-align: left;
-    padding: 0;
-    border-radius: 0;
-    height: auto;
-    display: block;
-}
-
-.detail-map-content {
-    padding: 0;
-    margin-top: 10px;
-}
-
-#detail-earthquake-map {
-    width: 100%;
-    height: 300px;
-    border: none;
-    border-radius: 4px;
-    overflow: hidden;
-}
-
-/* Detail back button container styling */
-.detail-back-button-container {
-    background-color: transparent;
-    border: none;
-    border-radius: 0;
-    margin-bottom: 20px;
-    padding: 0;
-    width: 100%;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-}
-
-.detail-back-button {
-    background-color: #6A0806;
-    color: #FFFFFF !important;
-    padding: 8px 16px;
-    border-radius: 4px;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    display: inline-block;
-    border: 1px solid #6A0806;
-    text-decoration: none;
-}
-
-.detail-back-button:hover {
-    background-color: #8B0A08;
-    color: #FFE0DF !important;
-    transform: scale(1.05);
-    transition: all 0.2s ease;
-    border-color: #8B0A08;
-}
-
-/* Standardize all detail text to 14px - preserve sharing button and icon sizes */
-.detail-earthquake-details p {
-    font-size: 14px !important;
-}
-
-.detail-earthquake-details .depth {
-    color: #6c757d;
-    font-size: 14px;
-}
-
-.detail-earthquake-details .magnitude {
-    font-size: 14px !important;
-}
-
-.detail-earthquake-details .date {
-    font-size: 14px !important;
-}
-
-.detail-earthquake-details .source {
-    font-size: 14px !important;
-}
-
-.detail-earthquake-details .mobile-detail-share-label {
-    font-size: 14px !important;
-}
-
-/* Standardize detail-info-vertical text sizes to 14px */
-.detail-info-vertical p {
-    font-size: 14px !important;
-}
-
-.detail-info-vertical .magnitude {
-    font-size: 14px !important;
-}
-
-.detail-info-vertical .date {
-    font-size: 14px !important;
-}
-
-.detail-info-vertical .depth {
-    font-size: 14px !important;
-}
-
-.detail-info-vertical .source {
-    font-size: 14px !important;
-}
-
-.detail-info-vertical .mobile-detail-share-label {
-    font-size: 14px !important;
-}
-
-/* Mobile (320px - 767px) */
-@media screen and (max-width: 767px) {
-    body {
-        min-width: 320px;
-        overflow-x: hidden;
-        overflow-y: auto; /* Allow vertical scrolling */
-        -webkit-text-size-adjust: 100%;
-        -moz-text-size-adjust: 100%;
-        -ms-text-size-adjust: 100%;
-        text-size-adjust: 100%;
-    }
-    
-    .container {
-        min-width: 320px;
-        max-width: 100%;
-        margin: 0;
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-    }
-    
-    .header {
-        min-height: 100px;
-        padding: 10px 15px;
-        flex-direction: row;
-        align-items: flex-end;
-        justify-content: space-between;
-        gap: 8px;
-        flex-shrink: 0;
-    }
-    
-    .header-logo {
-        margin-right: 20px;
-        margin-bottom: 0;
-        display: flex;
-        align-items: center;
-        flex-shrink: 0;
-    }
-    
-    .header-text {
-        align-items: flex-start;
-        text-align: left;
-    }
-    
-    .header-contact {
-        display: none; /* Hide header contacts on mobile */
-    }
-    
-    .content {
-        flex: 1;
-        flex-direction: column;
-        display: flex;
-        overflow: hidden;
-    }
-    
-    .left-section {
-        width: 100%;
-        min-width: 100%;
-        max-width: 100%;
-        flex: 1;
-        border-right: none;
-        border-bottom: none;
-        padding: 15px;
-        display: flex;
-        flex-direction: column;
-        overflow: hidden;
-    }
-    
-    /* Mobile view states - keep header content, replace only list area */
-    .mobile-view-list .left-section {
-        padding: 15px 15px;
-    }
-    
-    .mobile-view-list .earthquake-list-container {
-        display: block !important;
-        margin-left: 0;
-        margin-right: 0;
-        padding-left: 0;
-        padding-right: 0;
-    }
-    
-    .earthquake-list-container {
-        flex: 1;
-        overflow-y: auto;
-        margin-top: 20px;
-        padding-right: 10px;
-        padding-bottom: 20px; /* Add padding to prevent footer overlap */
-        margin-bottom: 0;
-    }
-    
-    /* Mobile view states - keep header content, replace only list area */
-    .mobile-view-list .earthquake-list-container {
-        display: block !important;
-    }
-    
-    .mobile-view-list .mobile-map-container {
-        display: none !important;
-    }
-    
-    .mobile-view-map .earthquake-list-container {
-        display: none !important;
-    }
-    
-    .mobile-view-map .mobile-map-container {
-        display: flex !important;
-        flex: 1;
-        overflow: hidden;
-        margin-top: 20px;
-        height: calc(100vh - 250px); /* Increase height to fill more space */
-        min-height: 500px; /* Increase minimum height */
-    }
-    
-    .footer {
-        display: block; /* Show footer on mobile */
-        padding: 12px 15px;
-        flex-shrink: 0;
-        margin-top: auto;
-    }
-    
-    .footer-contact {
-        flex-direction: column;
-        gap: 5px;
-        align-items: center;
-    }
-    
-    .footer-contact .contact-title {
-        margin-right: 0;
-        margin-bottom: 8px;
-        font-size: 15px;
-        text-align: center;
-    }
-    
-    .footer-contact .contact-links {
-        flex-direction: row;
-        gap: 5px;
-        justify-content: center;
-        width: 100%;
-        max-width: 300px;
-    }
-    
-    .footer-contact .contact-item {
-        padding: 4px;
-        background-color: transparent;
-        border-radius: 0;
-        margin: 0;
-        flex: 1;
-        max-width: 100px;
-        min-width: 100px;
-        flex-direction: column; /* Stack icon above text */
-        text-align: center;
-    }
-    
-    .footer-contact .contact-icon {
-        width: 28px;
-        height: 28px;
-        margin-right: 0; /* Remove right margin */
-        margin-bottom: 4px; /* Add bottom margin */
-    }
-    
-    .footer-contact .contact-label {
-        font-size: 11px;
-        line-height: 1.3;
-        text-align: center; /* Center align text */
-    }
-    
-    /* Mobile view states - add detail view */
-    .mobile-view-detail .earthquake-list-container {
-        display: none !important;
-    }
-    
-    .mobile-view-detail .mobile-map-container {
-        display: none !important;
-    }
-    
-    .mobile-view-detail .mobile-detail-container {
-        display: flex !important;
-    }
-    
-    /* Hide dropdown menus in mobile detail view */
-    .mobile-view-detail .dropdown-row {
-        display: none !important;
-    }
-    
-    .section-title {
-        font-size: 16px;
-        -webkit-text-size-adjust: 100%;
-        -moz-text-size-adjust: 100%;
-        -ms-text-size-adjust: 100%;
-        text-size-adjust: 100%;
-    }
-    
-    /* Enhanced mobile-view-list content font sizes */
-    .mobile-view-list .section-title {
-        font-size: 16px;
-    }
-    
-    .mobile-view-list .earthquake-item {
-        font-size: 15px;
-    }
-    
-    .mobile-view-list .earthquake-item .country {
-        font-size: 16px;
-    }
-    
-    .mobile-view-list .earthquake-item .detail-column p {
-        font-size: 15px;
-    }
-    
-    .mobile-view-list .earthquake-item .magnitude,
-    .mobile-view-list .earthquake-item .date {
-        font-size: 15px;
-    }
-    
-    .mobile-view-list .earthquake-item .depth,
-    .mobile-view-list .earthquake-item .source {
-        font-size: 15px;
-    }
-}
-
-/* Very Small Mobile (320px - 480px) */
-@media screen and (max-width: 480px) {
-    .header-title {
-        font-size: 18px;
-        -webkit-text-size-adjust: 100%;
-        -moz-text-size-adjust: 100%;
-        -ms-text-size-adjust: 100%;
-        text-size-adjust: 100%;
-    }
-    
-    .container {
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-    }
-    
-    .content {
-        flex: 1;
-        overflow: hidden;
-    }
-    
-    .left-section {
-        flex: 1;
-        overflow: hidden;
-    }
-    
-    .earthquake-list-container {
-        flex: 1;
-        overflow-y: auto;
-        padding-bottom: 30px; /* Extra padding for very small screens */
-    }
-    
-    .footer {
-        padding: 10px 15px; /* Reduce footer padding */
-        flex-shrink: 0;
-    }
-    
-    .footer-contact {
-        flex-direction: column;
-        gap: 8px;
-        align-items: center;
-    }
-    
-    .footer-contact .contact-title {
-        margin-right: 0;
-        margin-bottom: 8px;
-        font-size: 14px;
-        text-align: center;
-    }
-    
-    .footer-contact .contact-links {
-        flex-direction: row;
-        gap: 5px;
-        justify-content: center;
-        width: 100%;
-    }
-    
-    .footer-contact .contact-item {
-        padding: 3px;
-        background-color: transparent;
-        border-radius: 0;
-        margin: 0;
-        flex: 1;
-        max-width: 110px;
-        min-width: 90px;
-        flex-direction: column; /* Stack icon above text */
-        text-align: center;
-    }
-    
-    .footer-contact .contact-icon {
-        width: 20px;
-        height: 20px;
-        margin-right: 0; /* Remove right margin */
-        margin-bottom: 3px; /* Add bottom margin */
-    }
-    
-    .footer-contact .contact-label {
-        font-size: 10px;
-        line-height: 1.2;
-        text-align: center; /* Center align text */
-    }
-    
-    .mobile-view-map .mobile-map-container {
-        height: calc(100vh - 220px); /* Adjust for smaller screens */
-        min-height: 450px;
-    }
-    
-    .detail-info-grid {
-        display: flex;
-        gap: 0px;
-        width: 100%;
-    }
-    
-    .detail-info-item:first-child {
-        max-width: 50%;
-    }
-    
-    
-    .detail-info-item:last-child {
-        max-width: 50%;
-        margin-left: -20px;
-    }
-    
-    .detail-label,
-    .detail-value {
-        font-size: 12px;
-        margin: 3px 0;
-    }
-    
-    .detail-title {
-        font-size: 16px;
-    }
-    
-    .back-button {
-        padding: 6px 12px;
-        font-size: 13px;
-    }
-    
-    #detail-earthquake-map {
-        height: 250px;
-    }
-}
-
-/* Mobile earthquake detail view - hidden by default */
-.mobile-detail-container {
-    width:  100%;
-    background-color: #F4F5F3;
-    display: none; /* Hidden by default */
-    flex-direction: column;
-    flex: 1;
-    overflow-y: auto;
-    margin-top: 20px;
-    padding-bottom: 20px;
-}
-
-.detail-header {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #dee2e6;
-}
-
-.detail-title {
-    font-size: 18px;
-    font-weight: bold;
-    color: #2c3e50;
-    margin: 0;
-}
-
-/* Make detail earthquake info look exactly like earthquake list items */
-.detail-earthquake-info {
-    background-color: #F4F5F3;
-    border: 1px solid #dee2e6;
-    border-radius: 0;
-    margin-bottom: 20px;
-    padding: 15px;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.detail-earthquake-header {
-    margin: -15px -15px 10px -15px;
-    border-bottom: 1px solid #e9ecef;
-    padding: 4px 15px;
-    width: calc(100% + 30px);
-    background-color: #6A0806;
-    height: 34px;
-    display: flex;
-    align-items: center;
-}
-
-.detail-country {
-    font-size: 15px;
-    font-weight: bold;
-    color: #FFFFFF;
-    background-color: transparent;
-    margin: 0;
-    text-align: left;
-    padding: 0;
-    border-radius: 0;
-    height: auto;
-    display: block;
-}
-
-/* Back arrow styling in detail header */
-.detail-country span[onclick] {
-    color: #FFFFFF !important;
-    cursor: pointer;
-    margin-right: 8px;
-    font-size: 18px;
-    font-weight: bold;
-    user-select: none;
-    transition: all 0.2s ease;
-    display: inline-block;
-    padding: 2px 4px;
-    border-radius: 3px;
-}
-
-.detail-country span[onclick]:hover {
-    color: #FFE0DF !important;
-    background-color: rgba(255, 255, 255, 0.1);
-    transform: scale(1.1);
-    transition: all 0.2s ease;
-}
-
-.detail-country span[onclick]:active {
-    transform: scale(0.95);
-    background-color: rgba(255, 255, 255, 0.2);
-}
-
-.detail-earthquake-details {
-    padding: 0;
-}
-
-.detail-info-grid {
-    display: flex;
-    gap: 0px;
-    width: 100%;
-}
-
-.detail-info-item {
-    flex: 1;
-    text-align: left;
-    max-width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-.detail-info-item:first-child {
-    padding-right: 0px;
-    max-width: 44%;
-}
-
-.detail-info-item:last-child {
-    padding-left: 0;
-    margin-left: -15px;
-    max-width: 65%;
-}
-
-.detail-info-item p {
-    margin: 5px 0;
-    font-size: 14px;
-    color: #495057;
-    line-height: 1.4;
-}
-
-.detail-info-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    margin: 8px 0;
-}
-
-.detail-info-row p {
-    margin: 0;
-    font-size: 14px;
-    color: #495057;
-    line-height: 1.4;
-}
-
-.detail-info-row p.magnitude {
-    font-weight: 600;
-    color: #000;
-    flex: 0 0 auto;
-}
-
-.detail-info-row p.date {
-    font-weight: 600;
-    color: #000;
-    text-align: right;
-    flex: 0 0 auto;
-}
-
-/* Source and sharing row layout */
-.source-share-row {
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    width: 100%;
-    margin: 8px 0;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.source-share-row .source {
-    margin: 0;
-    font-size: 14px;
-    color: #6c757d;
-    line-height: 1.4;
-}
-
-.mobile-detail-share-section {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.mobile-detail-share-label {
-    font-size: 14px;
-    color: #495057;
-    font-weight: 600;
-    white-space: nowrap;
-}
-
-.mobile-detail-share-buttons {
-    display: flex;
-    gap: 6px;
-    align-items: center;
-}
-
-.mobile-detail-share-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 35px;
-    height: 35px;
-    border: none;
-    border-radius: 4px;
-    background-color: transparent;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    padding: 2px;
-}
-
-.mobile-detail-share-button:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.mobile-detail-share-button:active {
-    transform: translateY(0);
-}
-
-.mobile-detail-share-button.facebook-share:hover {
-    background-color: #e7f3ff;
-    border-radius: 4px;
-}
-
-.mobile-detail-share-button.twitter-share:hover {
-    background-color: #f0f0f0;
-    border-radius: 4px;
-}
-
-.mobile-detail-share-button.line-share:hover {
-    background-color: #e8f5e8;
-    border-radius: 4px;
-}
-
-.mobile-detail-share-icon {
-    width: 38px;
-    height: 38px;
-    object-fit: contain;
-    display: block;
-    border-radius: 4px;
-}
-
-/* Remove old mobile detail share styles that are no longer needed */
-.mobile-detail-share {
-    display: none;
-}
-
-.mobile-detail-share-title {
-    display: none;
-}
-
-/* Dropdown Styles with Fixed Container */
+/* Dropdown Styles */
 .dropdown-row {
     display: flex;
     gap: 50px; /* Increase gap from 10px to 20px for more space between dropdowns */
@@ -3192,7 +4201,7 @@ body {
     flex-wrap: nowrap; /* Force no wrapping */
     gap: 15px;
     min-width: 320px; /* Minimum width to accommodate both dropdowns */
-    
+    justify-content: center;
     align-items: flex-start;
     padding: 5px 0;
 }

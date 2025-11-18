@@ -343,6 +343,8 @@ body {
     flex-wrap: wrap;
     justify-content: flex-start; /* Left align for web version */
     align-items: flex-start;
+    -webkit-justify-content: flex-start;
+    -webkit-align-items: flex-start;
 }
 
 /* Fixed dropdown container wrapper */

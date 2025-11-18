@@ -219,6 +219,12 @@ body {
     margin-right: auto;
 }
 
+@media not all and (min-resolution:.001dpcm) { @supports (-webkit-appearance:none) {
+    .dropdown-row {
+        justify-content: flex-start !important;
+    }
+}}
+
 .dropdown-inner-wrapper {
     display: flex;
     flex-wrap: nowrap; /* Force no wrapping */

@@ -361,7 +361,7 @@ body {
     flex-wrap: nowrap; /* Force no wrapping */
     gap: 15px;
     min-width: 320px; /* Minimum width to accommodate both dropdowns */
-    justify-content: center;
+    
     align-items: flex-start;
     padding: 5px 0;
 }

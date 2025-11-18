@@ -882,7 +882,7 @@ function addEarthquakeMarkersToMobileMap(earthquakes) {
             `)}`;
 
             // Line icon
-            const lineIcon = `/picture/line.png`;
+            const lineIcon = `/my-portfolio/demoearthquake-th/picture/line.png`;
             const lineFallbackIcon = `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="#00c300"><path d="M12 0C5.373 0 0 4.977 0 11.111c0 3.497 1.745 6.616 4.472 8.652L4.014 24l4.7-2.82C9.456 21.384 10.71 21.556 12 21.556c6.627 0 12-4.977 12-11.111S18.627 0 12 0z"/></svg>`)}`;
 
             // Create mobile-optimized info window

@@ -23,10 +23,32 @@ function updateDateTime() {
     document.getElementById('time').innerHTML = `เวลา ${hours}:${minutes} น. <span style="font-size: 12px;">(ประเทศไทย)</span>`;
 }
 
+// Global cache for earthquake data (prevents re-fetching on dropdown change)
+let cachedEarthquakeData = {
+    tmd: null,
+    usgs: null,
+    combined: null,
+    lastFetch: 0
+};
+
+const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+
 // Fetch earthquake data from TMD RSS feed only
 async function fetchTMDEarthquakeData() {
     try {
+        // Check cache first
+        const cacheAge = Date.now() - cachedEarthquakeData.lastFetch;
+        if (cacheAge < CACHE_DURATION && cachedEarthquakeData.tmd) {
+            console.log('✅ Using cached TMD data');
+            displayEarthquakeData(cachedEarthquakeData.tmd);
+            addEarthquakeMarkersToMap(cachedEarthquakeData.tmd);
+            return;
+        }
+        
         const tmdData = await getTMDEarthquakeData();
+        cachedEarthquakeData.tmd = tmdData;
+        cachedEarthquakeData.lastFetch = Date.now();
+        
         displayEarthquakeData(tmdData);
         addEarthquakeMarkersToMap(tmdData);
     } catch (error) {
@@ -38,80 +60,252 @@ async function fetchTMDEarthquakeData() {
 
 // Fetch from USGS and filter for Thailand impact
 async function fetchUSGSEarthquakeData() {
+    console.log('🔍 Starting USGS data fetch...');
+    
     try {
-        const response = await fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson');
+        // Safari-specific detection and handling
+        const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+        console.log('Browser is Safari:', isSafari);
         
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+        // Use CORS proxy to avoid CORS issues
+        const proxyUrl = 'https://api.allorigins.win/get?url=';
+        const usgsUrl = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson';
+        const fullUrl = proxyUrl + encodeURIComponent(usgsUrl);
+        
+        console.log('📡 Fetching from:', fullUrl);
+        
+        // Check cache first
+        const cacheKey = 'usgs_earthquake_data';
+        const cacheExpiry = 5 * 60 * 1000; // 5 minutes
+        const cached = localStorage.getItem(cacheKey);
+        const cacheTime = localStorage.getItem(cacheKey + '_time');
+        
+        if (cached && cacheTime && (Date.now() - parseInt(cacheTime) < cacheExpiry)) {
+            console.log('✅ Using cached USGS data');
+            try {
+                const cachedData = JSON.parse(cached);
+                if (cachedData && cachedData.length > 0) {
+                    return cachedData;
+                }
+            } catch (e) {
+                console.warn('Cache parse error:', e);
+            }
         }
         
-        const data = await response.json();
+        // Optimized fetch options with reasonable timeout
+        const fetchOptions = {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json'
+            },
+            cache: 'default', // Use browser cache
+            credentials: 'omit'
+        };
+        
+        const response = await Promise.race([
+            fetch(fullUrl, fetchOptions),
+            new Promise(function(_, reject) {
+                setTimeout(function() {
+                    reject(new Error('Fetch timeout after 15 seconds'));
+                }, 15000);
+            })
+        ]);
+        
+        console.log('📥 Response received:', response.status, response.statusText);
+        
+        if (!response.ok) {
+            throw new Error('HTTP error! status: ' + response.status + ' ' + response.statusText);
+        }
+        
+        const result = await response.json();
+        console.log('✅ JSON parsed, checking contents...');
+        console.log('Result type:', typeof result);
+        console.log('Has contents:', result && result.contents ? 'YES' : 'NO');
+        
+        if (!result || !result.contents) {
+            console.error('❌ No contents in result:', result);
+            throw new Error('No contents in proxy response');
+        }
+        
+        let data;
+        try {
+            data = JSON.parse(result.contents);
+        } catch (parseError) {
+            console.error('❌ Failed to parse contents:', parseError);
+            throw new Error('Failed to parse earthquake data: ' + parseError.message);
+        }
+        
+        console.log('✅ Data parsed successfully');
+        console.log('Data type:', typeof data);
+        console.log('Has features:', data && data.features ? 'YES' : 'NO');
+        console.log('Features count:', data && data.features ? data.features.length : 0);
+        
+        // Validate data structure
+        if (!data || !data.features || !Array.isArray(data.features)) {
+            console.error('❌ Invalid data structure:', data);
+            throw new Error('Invalid earthquake data structure');
+        }
+        
+        if (data.features.length === 0) {
+            console.warn('⚠️ No earthquake features found in USGS data');
+            return getSampleUSGSData();
+        }
         
         // Thailand coordinates for distance calculation
         const thailandLat = 13.7563;
         const thailandLng = 100.5018;
         
         // Filter earthquakes that might affect Thailand
+        console.log('🔍 Starting to filter', data.features.length, 'earthquakes...');
+        
         const significantEarthquakes = data.features
-            .filter(eq => {
+            .filter(function(eq) {
+                // Safari-compatible null checks
+                if (!eq || !eq.geometry || !eq.geometry.coordinates || !eq.properties) {
+                    console.log('⚠️ Skipping invalid earthquake structure');
+                    return false;
+                }
+                
                 const lat = eq.geometry.coordinates[1];
                 const lng = eq.geometry.coordinates[0];
                 const magnitude = eq.properties.mag;
+                const place = eq.properties.place ? String(eq.properties.place).toLowerCase() : '';
                 
-                // Only consider earthquakes with magnitude > 3.5
-                if (magnitude <= 3.5) return false;
+                // Safari-compatible null/undefined checks
+                if (typeof lat !== 'number' || typeof lng !== 'number' || typeof magnitude !== 'number') {
+                    return false;
+                }
                 
-                // Calculate distance from Thailand (approximate)
-                const distance = calculateDistance(thailandLat, thailandLng, lat, lng);
+                // Lower threshold to 3.0 to catch more earthquakes
+                if (magnitude <= 3.0) {
+                    return false;
+                }
                 
-                // Filter criteria for earthquakes that could impact Thailand:
-                // 1. High magnitude (>= 6.0) within 2000km
-                // 2. Medium magnitude (>= 5.0) within 1000km  
-                // 3. Lower magnitude (> 3.5) within 500km
-                // 4. Any earthquake in Thailand or immediate neighbors
-                
-                if (magnitude >= 6.0 && distance <= 2000) return true;
-                if (magnitude >= 5.0 && distance <= 1000) return true;
-                if (magnitude > 3.5 && distance <= 500) return true;
-                
-                // Include earthquakes in Thailand and neighboring countries
-                const place = eq.properties.place ? eq.properties.place.toLowerCase() : '';
-                const nearbyCountries = [
+                // Priority 1: Include earthquakes in key neighboring countries (regardless of distance)
+                const priorityCountries = [
                     'thailand', 'myanmar', 'laos', 'cambodia', 'vietnam', 
-                    'malaysia', 'indonesia', 'philippines', 'china', 'india',
-                    'bangladesh', 'singapore'
+                    'malaysia', 'indonesia', 'philippines', 'singapore'
                 ];
                 
-                if (nearbyCountries.some(country => place.includes(country))) {
-                    return magnitude > 3.5; // Only show magnitude > 3.5 for nearby countries
+                for (let i = 0; i < priorityCountries.length; i++) {
+                    if (place.includes(priorityCountries[i])) {
+                        return true;
+                    }
                 }
+                
+                // Priority 2: Calculate distance from Thailand for other earthquakes
+                const thailandLat = 13.7563;
+                const thailandLng = 100.5018;
+                const distance = calculateDistance(thailandLat, thailandLng, lat, lng);
+                
+                // Filter criteria for other earthquakes:
+                if (magnitude >= 6.0 && distance <= 3000) return true;
+                if (magnitude >= 5.0 && distance <= 2000) return true;
+                if (magnitude >= 4.0 && distance <= 1500) return true;
+                if (magnitude > 3.0 && distance <= 1000) return true;
                 
                 return false;
             })
-            .sort((a, b) => {
-                // Sort by most recent first (date/time descending)
-                const dateA = new Date(a.properties.time).getTime();
-                const dateB = new Date(b.properties.time).getTime();
+            .sort(function(a, b) {
+                // Sort by most recent first (date/time descending) - Safari-compatible
+                const dateA = a.properties && a.properties.time ? new Date(a.properties.time).getTime() : 0;
+                const dateB = b.properties && b.properties.time ? new Date(b.properties.time).getTime() : 0;
                 return dateB - dateA;
             })
             .slice(0, 15) // Limit to 15 most recent earthquakes
-            .map(eq => ({
-                title: eq.properties.place || 'Unknown location',
-                latitude: eq.geometry.coordinates[1],
-                longitude: eq.geometry.coordinates[0],
-                depth: eq.geometry.coordinates[2] || 'N/A',
-                magnitude: eq.properties.mag || 'N/A',
-                time: new Date(eq.properties.time).toISOString(),
-                location: extractLocationFromUSGS(eq.properties.place),
-                source: 'USGS'
-            }));
+            .map(function(eq) {
+                const mapped = {
+                    title: eq.properties.place || 'Unknown location',
+                    latitude: eq.geometry.coordinates[1],
+                    longitude: eq.geometry.coordinates[0],
+                    depth: eq.geometry.coordinates[2] || 'N/A',
+                    magnitude: eq.properties.mag || 'N/A',
+                    time: new Date(eq.properties.time).toISOString(),
+                    location: extractLocationFromUSGS(eq.properties.place),
+                    source: 'USGS'
+                };
+                return mapped;
+            });
         
+        console.log('✅ USGS data processed:', significantEarthquakes.length, 'earthquakes');
+        if (significantEarthquakes.length > 0) {
+            console.log('📋 Sample earthquakes:');
+            for (let i = 0; i < Math.min(3, significantEarthquakes.length); i++) {
+                const eq = significantEarthquakes[i];
+                console.log('   ' + (i + 1) + '. ' + eq.location + ' M' + eq.magnitude + ' at ' + eq.time);
+            }
+            
+            // Cache the processed data
+            try {
+                localStorage.setItem(cacheKey, JSON.stringify(significantEarthquakes));
+                localStorage.setItem(cacheKey + '_time', Date.now().toString());
+                console.log('💾 Cached USGS data');
+            } catch (e) {
+                console.warn('Cache storage error:', e);
+            }
+        } else {
+            console.warn('⚠️ No earthquakes found after filtering!');
+        }
         return significantEarthquakes;
         
     } catch (error) {
-        console.error('Error fetching USGS earthquake data:', error);
-        return [];
+        console.error('❌ Error fetching USGS earthquake data:', error);
+        console.error('Error details:', {
+            name: error.name,
+            message: error.message,
+            stack: error.stack
+        });
+        
+        // Safari: Show user-friendly error message
+        const earthquakeList = document.querySelector('.earthquake-list');
+        if (earthquakeList) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-message';
+            errorDiv.style.cssText = 'padding: 15px; margin: 10px; background-color: #fff3cd; border: 1px solid #ffc107; border-radius: 5px; color: #856404;';
+            errorDiv.innerHTML = '<strong>⚠️ Cannot connect to USGS:</strong> ' + error.message + '<br><small>Showing sample data instead</small>';
+            earthquakeList.prepend(errorDiv);
+        }
+        
+        // Return sample data as fallback
+        console.log('⚠️ Returning sample USGS data as fallback');
+        return getSampleUSGSData();
     }
+}
+
+// Get sample USGS data as fallback
+function getSampleUSGSData() {
+    return [
+        {
+            title: 'Philippines',
+            latitude: 14.5995,
+            longitude: 120.9842,
+            depth: 15.2,
+            magnitude: 4.1,
+            time: new Date(Date.now() - 3600000).toISOString(),
+            location: 'ประเทศฟิลิปปินส์',
+            source: 'USGS'
+        },
+        {
+            title: 'Indonesia',
+            latitude: -6.2088,
+            longitude: 106.8456,
+            depth: 25.5,
+            magnitude: 4.5,
+            time: new Date(Date.now() - 7200000).toISOString(),
+            location: 'ประเทศอินโดนีเซีย',
+            source: 'USGS'
+        },
+        {
+            title: 'Myanmar',
+            latitude: 19.991,
+            longitude: 95.874,
+            depth: 10.0,
+            magnitude: 3.9,
+            time: new Date(Date.now() - 10800000).toISOString(),
+            location: 'ประเทศเมียนมา',
+            source: 'USGS'
+        }
+    ];
 }
 
 // Fetch combined data from both TMD and USGS sources
@@ -123,27 +317,31 @@ async function fetchCombinedEarthquakeData() {
         const earthquakeList = document.querySelector('.earthquake-list');
         earthquakeList.innerHTML = '<div class="loading">กำลังโหลดข้อมูล...</div>';
         
-        // Fetch TMD data
-        let tmdEarthquakes = [];
-        try {
-            tmdEarthquakes = await getTMDEarthquakeData();
-        } catch (error) {
-            console.log('TMD data fetch failed, using sample data:', error);
-            tmdEarthquakes = getSampleTMDData();
-        }
+        // Fetch both sources in parallel for speed
+        console.log('⚡ Fetching TMD and USGS data in parallel...');
+        const startTime = Date.now();
         
-        // Fetch USGS data
-        const usgsEarthquakes = await fetchUSGSEarthquakeData();
+        const [tmdEarthquakes, usgsEarthquakes] = await Promise.all([
+            getTMDEarthquakeData().catch(function(error) {
+                console.log('TMD data fetch failed, using sample data:', error);
+                return getSampleTMDData();
+            }),
+            fetchUSGSEarthquakeData()
+        ]);
+        
+        const loadTime = ((Date.now() - startTime) / 1000).toFixed(2);
+        console.log('✅ Data received in ' + loadTime + 's: TMD=' + tmdEarthquakes.length + ', USGS=' + usgsEarthquakes.length);
         
         // Combine and sort by date/time (most recent first)
-        const combinedEarthquakes = [...tmdEarthquakes, ...usgsEarthquakes]
-            .filter(earthquake => {
-                // Only show earthquakes with magnitude > 3.5
+        console.log('🔄 Combining', tmdEarthquakes.length, 'TMD +', usgsEarthquakes.length, 'USGS earthquakes...');
+        const combinedEarthquakes = tmdEarthquakes.concat(usgsEarthquakes)
+            .filter(function(earthquake) {
+                // Show earthquakes with magnitude > 3.0
                 const magnitude = earthquake.magnitude !== 'N/A' ? parseFloat(earthquake.magnitude) : 0;
-                return magnitude > 3.5;
+                return magnitude > 3.0;
             })
-            .sort((a, b) => {
-                // Parse dates for comparison
+            .sort(function(a, b) {
+                // Parse dates for comparison - Safari-compatible
                 const dateA = a.time ? new Date(a.time).getTime() : 0;
                 const dateB = b.time ? new Date(b.time).getTime() : 0;
                 
@@ -152,7 +350,15 @@ async function fetchCombinedEarthquakeData() {
             })
             .slice(0, 20); // Show top 20 most recent earthquakes with magnitude > 3.5
         
-        console.log(`Combined data: ${tmdEarthquakes.length} TMD + ${usgsEarthquakes.length} USGS = ${combinedEarthquakes.length} total`);
+        console.log('✅ Combined data: ' + tmdEarthquakes.length + ' TMD + ' + usgsEarthquakes.length + ' USGS = ' + combinedEarthquakes.length + ' total');
+        console.log('Sample combined earthquake:', combinedEarthquakes[0]);
+        
+        // Cache the data for fast filtering
+        cachedEarthquakeData.tmd = tmdEarthquakes;
+        cachedEarthquakeData.usgs = usgsEarthquakes;
+        cachedEarthquakeData.combined = combinedEarthquakes;
+        cachedEarthquakeData.lastFetch = Date.now();
+        console.log('💾 Cached earthquake data for fast filtering');
         
         displayEarthquakeData(combinedEarthquakes);
         
@@ -357,10 +563,13 @@ function convertToThaiLocation(title) {
     // Remove English names in parentheses first
     let cleanTitle = title.replace(/\s*\([^)]*\)/g, '');
     
-    // Try to find and replace English country names
-    for (const [english, thai] of Object.entries(locationMap)) {
-        if (cleanTitle.toLowerCase().includes(english.toLowerCase())) {
-            return thai;
+    // Try to find and replace English country names - Safari-compatible
+    const cleanLower = cleanTitle.toLowerCase();
+    for (const english in locationMap) {
+        if (locationMap.hasOwnProperty(english)) {
+            if (cleanLower.includes(english.toLowerCase())) {
+                return locationMap[english];
+            }
         }
     }
     
@@ -393,10 +602,13 @@ function extractLocationFromUSGS(place) {
         'Sri Lanka': 'ประเทศศรีลังกา'
     };
     
-    // Try to identify country and return only Thai name
-    for (const [english, thai] of Object.entries(countryMap)) {
-        if (place.toLowerCase().includes(english.toLowerCase())) {
-            return thai;
+    // Try to identify country and return only Thai name - Safari-compatible
+    const placeLower = place.toLowerCase();
+    for (const english in countryMap) {
+        if (countryMap.hasOwnProperty(english)) {
+            if (placeLower.includes(english.toLowerCase())) {
+                return countryMap[english];
+            }
         }
     }
     
@@ -641,12 +853,36 @@ function displayErrorMessage(message = 'ไม่สามารถโหลด�
 // Handle dropdown change
 function handleDataSourceChange() {
     const dataSource = document.getElementById('data-source').value;
+    console.log('Data source changed to:', dataSource);
     
-    // Show loading state
+    // Check if we have cached data
+    const cacheAge = Date.now() - cachedEarthquakeData.lastFetch;
+    const isCacheValid = cacheAge < CACHE_DURATION;
+    
+    if (isCacheValid && cachedEarthquakeData.combined) {
+        console.log('✅ Using cached data (age: ' + Math.round(cacheAge / 1000) + 's)');
+        
+        // Filter cached data instantly - no loading needed!
+        let dataToDisplay;
+        if (dataSource === 'tmd') {
+            dataToDisplay = cachedEarthquakeData.combined.filter(eq => eq.source === 'TMD');
+        } else if (dataSource === 'usgs') {
+            dataToDisplay = cachedEarthquakeData.combined.filter(eq => eq.source === 'USGS');
+        } else {
+            dataToDisplay = cachedEarthquakeData.combined;
+        }
+        
+        // Display immediately without loading state
+        displayEarthquakeData(dataToDisplay);
+        addEarthquakeMarkersToMap(dataToDisplay);
+        return;
+    }
+    
+    // Cache miss or expired - show loading and fetch
     const earthquakeList = document.querySelector('.earthquake-list');
     earthquakeList.innerHTML = '<div class="loading">กำลังโหลดข้อมูล...</div>';
     
-    console.log('Data source changed to:', dataSource);
+    console.log('⚠️ Cache miss or expired, fetching fresh data...');
     
     if (dataSource === 'tmd') {
         fetchTMDEarthquakeData();

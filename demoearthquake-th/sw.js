@@ -1,7 +1,7 @@
 // Service Worker for earthquake monitoring site
-const CACHE_NAME = 'earthquake-app-v1.0.0';
-const STATIC_CACHE = 'static-v1.0.0';
-const DATA_CACHE = 'data-v1.0.0';
+const CACHE_NAME = 'earthquake-app-v1.1.0';
+const STATIC_CACHE = 'static-v1.1.0';
+const DATA_CACHE = 'data-v1.1.0';
 
 // Assets to cache immediately
 const STATIC_ASSETS = [
@@ -72,19 +72,23 @@ self.addEventListener('fetch', (event) => {
     const { request } = event;
     const url = new URL(request.url);
 
-    // Handle API requests with network-first strategy
-    if (DATA_URLS.some(dataUrl => request.url.includes(new URL(dataUrl).hostname))) {
-        event.respondWith(
-            networkFirstStrategy(request)
-        );
-        return;
+    // Skip service worker for CORS proxy requests (allorigins.win)
+    if (url.hostname.includes('allorigins.win')) {
+        console.log('Bypassing service worker for CORS proxy:', request.url);
+        return; // Let browser handle it directly
     }
 
-    // Handle Google Maps API requests
-    if (url.hostname.includes('maps.googleapis.com') || url.hostname.includes('maps.gstatic.com')) {
-        event.respondWith(
-            networkFirstStrategy(request)
-        );
+    // Skip service worker for external API requests
+    if (url.hostname.includes('earthquake.usgs.gov') || 
+        url.hostname.includes('earthquake.tmd.go.th')) {
+        console.log('Bypassing service worker for external API:', request.url);
+        return; // Let browser handle it directly
+    }
+
+    // Handle Google Maps API requests - network only
+    if (url.hostname.includes('maps.googleapis.com') || 
+        url.hostname.includes('maps.gstatic.com')) {
+        event.respondWith(fetch(request));
         return;
     }
 
@@ -99,10 +103,8 @@ self.addEventListener('fetch', (event) => {
         return;
     }
 
-    // Default to network-first for other requests
-    event.respondWith(
-        networkFirstStrategy(request)
-    );
+    // Default to network for other requests
+    event.respondWith(fetch(request));
 });
 
 // Cache-first strategy for static assets
@@ -117,7 +119,7 @@ async function cacheFirstStrategy(request) {
         console.log('Cache miss, fetching from network:', request.url);
         const networkResponse = await fetch(request);
         
-        if (networkResponse.ok) {
+        if (networkResponse && networkResponse.ok) {
             const cache = await caches.open(STATIC_CACHE);
             cache.put(request, networkResponse.clone());
         }
@@ -126,16 +128,16 @@ async function cacheFirstStrategy(request) {
     } catch (error) {
         console.error('Cache-first strategy failed:', error);
         
-        // Return cached response if available, otherwise return offline page
+        // Try to return cached response
         const cachedResponse = await caches.match(request);
         if (cachedResponse) {
             return cachedResponse;
         }
         
-        // Could return a custom offline page here
-        return new Response('Offline', { 
-            status: 503, 
-            statusText: 'Service Unavailable' 
+        // Return a simple error response
+        return new Response('Network error', { 
+            status: 408, 
+            statusText: 'Network Request Failed' 
         });
     }
 }

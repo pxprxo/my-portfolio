@@ -410,40 +410,6 @@ body {
     width: 160px;
 }
 
-/* Mobile: Make second dropdown smaller - width only, keep border/height consistent */
-@media screen and (max-width: 767px) {
-    .display-option-container {
-        flex-shrink: 0;
-        width: 110px !important;
-        min-width: 110px !important;
-    }
-    
-    .display-option-container .dropdown {
-        width: 110px !important;
-    }
-    
-    .display-option-container .dropdown-select {
-        font-size: 12px;
-        padding: 0 6px;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    .display-option-container {
-        width: 100px !important;
-        min-width: 100px !important;
-    }
-    
-    .display-option-container .dropdown {
-        width: 100px !important;
-    }
-    
-    .display-option-container .dropdown-select {
-        font-size: 11px;
-        padding: 0 5px;
-    }
-}
-
 /* Map Styles */
 .map-container {
     width: 100%;
@@ -3181,28 +3147,28 @@ body {
         width: 100%;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
-        padding: 0;
-        margin: 0;
+        padding: 0 15px;
+        margin: 0 -15px; /* Negative margin to extend to edges */
     }
     
     .dropdown-inner-wrapper {
         display: flex;
         flex-wrap: nowrap;
         gap: 10px;
-        min-width: fit-content;
-        justify-content: flex-start;
+        min-width: 320px; /* Minimum width for mobile */
+        justify-content: center;
         align-items: flex-start;
-        padding: 0;
+        padding: 5px 10px;
     }
     
     .dropdown-container {
         flex-shrink: 0;
-        width: 160px !important;
-        min-width: 160px !important;
+        width: 140px;
+        min-width: 140px;
     }
     
     .dropdown {
-        width: 160px !important;
+        width: 140px;
         height: 42px;
     }
     
@@ -3231,12 +3197,12 @@ body {
     }
     
     .dropdown-container {
-        width: 160px !important;
-        min-width: 160px !important;
+        width: 130px;
+        min-width: 130px;
     }
     
     .dropdown {
-        width: 160px !important;
+        width: 130px;
         height: 40px;
     }
     

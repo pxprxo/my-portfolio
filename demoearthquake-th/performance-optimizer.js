@@ -177,6 +177,23 @@ class PerformanceOptimizer {
 
     // Setup service worker for caching
     setupServiceWorker() {
+        // Temporarily disable service worker to debug Safari issues
+        console.log('⚠️ Service Worker disabled for debugging');
+        
+        // Unregister any existing service workers
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                for (let registration of registrations) {
+                    registration.unregister();
+                    console.log('Unregistered service worker:', registration);
+                }
+            });
+        }
+        
+        return;
+        
+        // Original code (disabled)
+        /*
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('/sw.js')
                 .then(registration => {
@@ -186,6 +203,7 @@ class PerformanceOptimizer {
                     console.log('Service Worker registration failed:', error);
                 });
         }
+        */
     }
 
     // Preload critical assets

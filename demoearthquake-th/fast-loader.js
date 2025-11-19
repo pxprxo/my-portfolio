@@ -133,21 +133,27 @@ class EarthquakeDataLoader {
         const cached = this.getCachedData(cacheKey);
         if (cached) return cached;
 
-        const timeout = this.isMobile ? 2500 : 4000; // Very short timeout for mobile
+        const timeout = this.isMobile ? 3500 : 5000; // Longer timeout for proxy
 
         try {
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), timeout);
 
-            const response = await fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson', {
-                signal: controller.signal
+            // Use CORS proxy to avoid CORS issues
+            const proxyUrl = 'https://api.allorigins.win/get?url=';
+            const usgsUrl = encodeURIComponent('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson');
+            
+            const response = await fetch(proxyUrl + usgsUrl, {
+                signal: controller.signal,
+                headers: { 'Accept': 'application/json' }
             });
 
             clearTimeout(timeoutId);
 
             if (!response.ok) throw new Error('USGS fetch failed');
 
-            const data = await response.json();
+            const result = await response.json();
+            const data = JSON.parse(result.contents);
             const earthquakes = this.processUSGSData(data);
 
             this.setCachedData(cacheKey, earthquakes);
@@ -167,33 +173,55 @@ class EarthquakeDataLoader {
 
         return data.features
             .filter(eq => {
+                // Safari-compatible null checks
+                if (!eq || !eq.geometry || !eq.geometry.coordinates || !eq.properties) {
+                    return false;
+                }
+                
                 const mag = eq.properties.mag;
-                if (mag <= 3.5) return false;
+                const place = eq.properties.place ? String(eq.properties.place).toLowerCase() : '';
+                
+                if (typeof mag !== 'number' || mag <= 3.5) return false;
 
                 const lat = eq.geometry.coordinates[1];
                 const lng = eq.geometry.coordinates[0];
+                
+                if (typeof lat !== 'number' || typeof lng !== 'number') return false;
+                
+                // Priority 1: Always include earthquakes from key neighboring countries
+                const priorityCountries = ['thailand', 'myanmar', 'indonesia', 'philippines', 'malaysia', 'laos', 'cambodia', 'vietnam', 'singapore'];
+                for (let i = 0; i < priorityCountries.length; i++) {
+                    if (place.includes(priorityCountries[i])) {
+                        return true;
+                    }
+                }
+                
+                // Priority 2: Distance-based filtering for other locations
                 const distance = this.calculateDistance(thailandLat, thailandLng, lat, lng);
 
-                // Simplified distance check for performance
-                if (mag >= 6.0 && distance <= 2000) return true;
-                if (mag >= 5.0 && distance <= 1000) return true;
-                if (mag > 3.5 && distance <= 500) return true;
-
-                const place = eq.properties.place?.toLowerCase() || '';
-                return ['thailand', 'myanmar', 'indonesia', 'philippines', 'malaysia']
-                    .some(country => place.includes(country));
+                if (mag >= 6.0 && distance <= 3000) return true;
+                if (mag >= 5.0 && distance <= 2000) return true;
+                if (mag > 3.5 && distance <= 1000) return true;
+                
+                return false;
             })
-            .sort((a, b) => b.properties.time - a.properties.time)
+            .sort(function(a, b) { 
+                const timeA = a.properties && a.properties.time ? a.properties.time : 0;
+                const timeB = b.properties && b.properties.time ? b.properties.time : 0;
+                return timeB - timeA;
+            })
             .slice(0, maxItems)
-            .map(eq => ({
-                location: this.extractUSGSLocation(eq.properties.place),
-                latitude: eq.geometry.coordinates[1],
-                longitude: eq.geometry.coordinates[0],
-                depth: eq.geometry.coordinates[2] || 'N/A',
-                magnitude: eq.properties.mag || 'N/A',
-                time: new Date(eq.properties.time).toISOString(),
-                source: 'USGS'
-            }));
+            .map(function(eq) {
+                return {
+                    location: this.extractUSGSLocation(eq.properties.place),
+                    latitude: eq.geometry.coordinates[1],
+                    longitude: eq.geometry.coordinates[0],
+                    depth: eq.geometry.coordinates[2] || 'N/A',
+                    magnitude: eq.properties.mag || 'N/A',
+                    time: new Date(eq.properties.time).toISOString(),
+                    source: 'USGS'
+                };
+            }.bind(this));
     }
 
     // Fast distance calculation (simplified)
@@ -215,9 +243,12 @@ class EarthquakeDataLoader {
             'Malaysia': 'ประเทศมาเลเซีย'
         };
 
-        for (const [eng, thai] of Object.entries(countryMap)) {
-            if (title.toLowerCase().includes(eng.toLowerCase())) {
-                return thai;
+        const titleLower = title.toLowerCase();
+        for (const eng in countryMap) {
+            if (countryMap.hasOwnProperty(eng)) {
+                if (titleLower.includes(eng.toLowerCase())) {
+                    return countryMap[eng];
+                }
             }
         }
 

@@ -106,8 +106,8 @@ async function fetchUSGSEarthquakeData() {
             fetch(fullUrl, fetchOptions),
             new Promise(function(_, reject) {
                 setTimeout(function() {
-                    reject(new Error('Fetch timeout after 15 seconds'));
-                }, 15000);
+                    reject(new Error('Fetch timeout after 10 seconds'));
+                }, 10000); // Reduced from 15 to 10 seconds
             })
         ]);
         
@@ -313,28 +313,37 @@ async function fetchCombinedEarthquakeData() {
     try {
         console.log('Fetching combined earthquake data from TMD and USGS...');
         
-        // Show loading state
+        // Show loading state immediately
         const earthquakeList = document.querySelector('.earthquake-list');
-        earthquakeList.innerHTML = '<div class="loading">กำลังโหลดข้อมูล...</div>';
+        earthquakeList.innerHTML = '<div class="loading" style="display: flex; flex-direction: column; align-items: center; padding: 40px 20px;"><div style="width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid #CB140F; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 15px;"></div><p style="color: #666; font-size: 14px; margin: 0;">กำลังโหลดข้อมูล...</p></div>';
         
-        // Fetch both sources in parallel for speed
+        // Fetch both sources in parallel with race condition for faster display
         console.log('⚡ Fetching TMD and USGS data in parallel...');
         const startTime = Date.now();
         
-        const [tmdEarthquakes, usgsEarthquakes] = await Promise.all([
+        // Use Promise.allSettled to handle failures gracefully and continue with available data
+        const results = await Promise.allSettled([
             getTMDEarthquakeData().catch(function(error) {
                 console.log('TMD data fetch failed, using sample data:', error);
                 return getSampleTMDData();
             }),
-            fetchUSGSEarthquakeData()
+            fetchUSGSEarthquakeData().catch(function(error) {
+                console.log('USGS data fetch failed, continuing with TMD only:', error);
+                return [];
+            })
         ]);
         
+        const tmdEarthquakes = results[0].status === 'fulfilled' ? results[0].value : [];
+        const usgsEarthquakes = results[1].status === 'fulfilled' ? results[1].value : [];
+        
         const loadTime = ((Date.now() - startTime) / 1000).toFixed(2);
-        console.log('✅ Data received in ' + loadTime + 's: TMD=' + tmdEarthquakes.length + ', USGS=' + usgsEarthquakes.length);
+        console.log('✅ Data received in ' + loadTime + 's: TMD=' + (tmdEarthquakes ? tmdEarthquakes.length : 0) + ', USGS=' + (usgsEarthquakes ? usgsEarthquakes.length : 0));
         
         // Combine and sort by date/time (most recent first)
-        console.log('🔄 Combining', tmdEarthquakes.length, 'TMD +', usgsEarthquakes.length, 'USGS earthquakes...');
-        const combinedEarthquakes = tmdEarthquakes.concat(usgsEarthquakes)
+        const validTmd = Array.isArray(tmdEarthquakes) ? tmdEarthquakes : [];
+        const validUsgs = Array.isArray(usgsEarthquakes) ? usgsEarthquakes : [];
+        console.log('🔄 Combining', validTmd.length, 'TMD +', validUsgs.length, 'USGS earthquakes...');
+        const combinedEarthquakes = validTmd.concat(validUsgs)
             .filter(function(earthquake) {
                 // Show earthquakes with magnitude > 3.0
                 const magnitude = earthquake.magnitude !== 'N/A' ? parseFloat(earthquake.magnitude) : 0;
@@ -350,15 +359,24 @@ async function fetchCombinedEarthquakeData() {
             })
             .slice(0, 20); // Show top 20 most recent earthquakes with magnitude > 3.5
         
-        console.log('✅ Combined data: ' + tmdEarthquakes.length + ' TMD + ' + usgsEarthquakes.length + ' USGS = ' + combinedEarthquakes.length + ' total');
+        console.log('✅ Combined data: ' + validTmd.length + ' TMD + ' + validUsgs.length + ' USGS = ' + combinedEarthquakes.length + ' total');
         console.log('Sample combined earthquake:', combinedEarthquakes[0]);
         
-        // Cache the data for fast filtering
-        cachedEarthquakeData.tmd = tmdEarthquakes;
-        cachedEarthquakeData.usgs = usgsEarthquakes;
+        // Cache the data for fast filtering (in-memory)
+        cachedEarthquakeData.tmd = validTmd;
+        cachedEarthquakeData.usgs = validUsgs;
         cachedEarthquakeData.combined = combinedEarthquakes;
         cachedEarthquakeData.lastFetch = Date.now();
-        console.log('💾 Cached earthquake data for fast filtering');
+        
+        // Also cache to localStorage for persistence across page loads
+        try {
+            localStorage.setItem('combined_earthquake_cache', JSON.stringify(combinedEarthquakes));
+            localStorage.setItem('combined_earthquake_cache_time', Date.now().toString());
+            console.log('💾 Cached earthquake data to memory and localStorage');
+        } catch (e) {
+            console.warn('Failed to cache to localStorage:', e);
+            console.log('💾 Cached earthquake data to memory only');
+        }
         
         displayEarthquakeData(combinedEarthquakes);
         
@@ -662,7 +680,7 @@ function displayEarthquakeData(earthquakes) {
     const earthquakeList = document.querySelector('.earthquake-list');
     
     if (!earthquakes || earthquakes.length === 0) {
-        earthquakeList.innerHTML = '<div class="no-data">ไม่มีข้อมูลแผ่นดินไหวในขณะนี้</div>';
+        earthquakeList.innerHTML = '<div class="no-data">ไม่มีข้อมูลแผ่นดินไหวมากกว่าขนาด 3.5 ในขณะนี้</div>';
         // Clear map markers when no data
         if (typeof clearMapMarkers === 'function') {
             clearMapMarkers();
@@ -866,15 +884,29 @@ function handleDataSourceChange() {
         let dataToDisplay;
         if (dataSource === 'tmd') {
             dataToDisplay = cachedEarthquakeData.combined.filter(eq => eq.source === 'TMD');
+            console.log('Filtering TMD data:', dataToDisplay.length, 'earthquakes');
         } else if (dataSource === 'usgs') {
             dataToDisplay = cachedEarthquakeData.combined.filter(eq => eq.source === 'USGS');
+            console.log('Filtering USGS data:', dataToDisplay.length, 'earthquakes');
         } else {
+            // combined - show all data
             dataToDisplay = cachedEarthquakeData.combined;
+            console.log('Showing combined data:', dataToDisplay.length, 'earthquakes');
         }
         
         // Display immediately without loading state
         displayEarthquakeData(dataToDisplay);
         addEarthquakeMarkersToMap(dataToDisplay);
+        
+        // Update mobile map if it exists and is visible
+        if (mobileMap && window.innerWidth < 768) {
+            const displayOption = document.getElementById('display-option').value;
+            if (displayOption === 'map') {
+                console.log('Updating mobile map with filtered data');
+                addEarthquakeMarkersToMobileMap(dataToDisplay);
+            }
+        }
+        
         return;
     }
     
@@ -890,6 +922,14 @@ function handleDataSourceChange() {
         fetchUSGSEarthquakeData().then(data => {
             displayEarthquakeData(data);
             addEarthquakeMarkersToMap(data);
+            
+            // Update mobile map if visible
+            if (mobileMap && window.innerWidth < 768) {
+                const displayOption = document.getElementById('display-option').value;
+                if (displayOption === 'map') {
+                    addEarthquakeMarkersToMobileMap(data);
+                }
+            }
         }).catch(error => {
             console.error('Error loading USGS data:', error);
             displayErrorMessage('ไม่สามารถโหลดข้อมูลจาก USGS ได้');
@@ -950,16 +990,34 @@ function handleDisplayOptionChange() {
         
         console.log('Showing map view');
         
+        // Get filtered data based on current data source selection
+        const dataSource = document.getElementById('data-source').value;
+        let earthquakesToShow = currentEarthquakes;
+        
+        // Apply data source filter if cached data is available
+        if (cachedEarthquakeData.combined) {
+            if (dataSource === 'tmd') {
+                earthquakesToShow = cachedEarthquakeData.combined.filter(eq => eq.source === 'TMD');
+                console.log('Mobile map: Filtering for TMD data -', earthquakesToShow.length, 'earthquakes');
+            } else if (dataSource === 'usgs') {
+                earthquakesToShow = cachedEarthquakeData.combined.filter(eq => eq.source === 'USGS');
+                console.log('Mobile map: Filtering for USGS data -', earthquakesToShow.length, 'earthquakes');
+            } else {
+                earthquakesToShow = cachedEarthquakeData.combined;
+                console.log('Mobile map: Showing combined data -', earthquakesToShow.length, 'earthquakes');
+            }
+        }
+        
         // Initialize mobile map if not already created
         if (!mobileMap) {
             console.log('Initializing mobile map...');
             setTimeout(() => {
                 initMobileMap();
                 
-                // Add current earthquake markers to mobile map after initialization
-                if (currentEarthquakes && currentEarthquakes.length > 0) {
-                    console.log('Adding markers to mobile map:', currentEarthquakes.length);
-                    addEarthquakeMarkersToMobileMap(currentEarthquakes);
+                // Add filtered earthquake markers to mobile map after initialization
+                if (earthquakesToShow && earthquakesToShow.length > 0) {
+                    console.log('Adding filtered markers to mobile map:', earthquakesToShow.length);
+                    addEarthquakeMarkersToMobileMap(earthquakesToShow);
                 }
             }, 100);
         } else {
@@ -968,10 +1026,10 @@ function handleDisplayOptionChange() {
                 console.log('Triggering map resize and updating markers...');
                 google.maps.event.trigger(mobileMap, 'resize');
                 
-                // Add current earthquake markers to mobile map
-                if (currentEarthquakes && currentEarthquakes.length > 0) {
-                    console.log('Adding markers to mobile map:', currentEarthquakes.length);
-                    addEarthquakeMarkersToMobileMap(currentEarthquakes);
+                // Add filtered earthquake markers to mobile map
+                if (earthquakesToShow && earthquakesToShow.length > 0) {
+                    console.log('Adding filtered markers to mobile map:', earthquakesToShow.length);
+                    addEarthquakeMarkersToMobileMap(earthquakesToShow);
                 }
                 
                 // Re-center and fit bounds if there are markers
@@ -1563,7 +1621,30 @@ function initMapAndData() {
     updateDateTime();
     setInterval(updateDateTime, 60000); // Update every minute
     
-    // Load initial earthquake data (combined sources by default)
+    // Check if we have cached data from previous session to display immediately
+    const cacheKey = 'combined_earthquake_cache';
+    const cacheTimeKey = 'combined_earthquake_cache_time';
+    const cachedData = localStorage.getItem(cacheKey);
+    const cacheTime = localStorage.getItem(cacheTimeKey);
+    const CACHE_DURATION_MS = 5 * 60 * 1000; // 5 minutes
+    
+    if (cachedData && cacheTime && (Date.now() - parseInt(cacheTime) < CACHE_DURATION_MS)) {
+        try {
+            const parsedCache = JSON.parse(cachedData);
+            console.log('✅ Displaying cached earthquake data immediately');
+            displayEarthquakeData(parsedCache);
+            addEarthquakeMarkersToMap(parsedCache);
+            
+            // Store in memory cache too
+            cachedEarthquakeData.combined = parsedCache;
+            cachedEarthquakeData.lastFetch = parseInt(cacheTime);
+        } catch (e) {
+            console.warn('Failed to parse cached data:', e);
+        }
+    }
+    
+    // Load fresh earthquake data (combined sources by default)
+    // This will update the display when new data arrives
     fetchCombinedEarthquakeData();
 }
 

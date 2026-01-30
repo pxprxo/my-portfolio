@@ -125,6 +125,12 @@
             .content { flex-direction: column; height: auto; }
         }
         
+        /* Loading spinner animation - inline for instant availability */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
         
     </style>
     
@@ -376,7 +382,7 @@
                     script.src = src;
                     script.async = true;
                     document.head.appendChild(script);
-                }, index * 50); // Stagger loading
+                }, index * 20); // Faster stagger loading
             });
         }
         
@@ -401,16 +407,14 @@
             }
         }
         
-        // Delay maps loading to prioritize header rendering
-        setTimeout(() => {
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', () => {
-                    setTimeout(loadGoogleMaps, 1000);
-                });
-            } else {
-                setTimeout(loadGoogleMaps, 1000);
-            }
-        }, 100);
+        // Load maps quickly after header renders
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                setTimeout(loadGoogleMaps, 100);
+            });
+        } else {
+            setTimeout(loadGoogleMaps, 100);
+        }
     </script>
 </body>
 </html>

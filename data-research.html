@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Sharlene's Product Design</title>
+        <link rel="stylesheet" href="/style-sheet.css">
+    
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Noto+Sans+Thai+Looped&display=swap" rel="stylesheet">
+    
+    </head>
+<body>
+    <div class="hamburger" onclick="toggleMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+    <nav class="menu-bar">
+        <div class="menu-container">
+            <a href="/index.html#header">HOME</a>
+            <a href="/index.html#project">PROJECTS</a>
+            <a href="/index.html#design">DESIGNS</a>
+            <a href="/file/sharlene-resume.pdf">RESUME</a>
+            <a href="mailto:pronsuda.1992@gmail.com">EMAIL</a>
+            <a href="https://www.linkedin.com/in/pronsuda-ruangsuwan/" target="_blank">LINKEDIN</a>
+        </div>
+    </nav>
+
+    <div class="product-header">
+        <div class="header-content">
+            <a href="/product-1.html"><h1 class="subject-heading">Data Analysis and Visualisation</h1></a>
+            <h2 class="intro-heading">Netflix Content Trends Analysis: United States vs South Korea</h2>
+        </div>
+    </div>
+
+    <div class="section-product">
+        <The class="product-content" id="intro">
+            <!-- <hr style="border: 0.1px solid #ccc; margin: 10px;"> -->
+            <br/>
+            <h2>Overview</h2>
+            <p>This personal project focuses on analysing Netflix content trends between the United States and South Korea using data visualisation and analytical techniques. 
+            The main objective of the dashboard is to compare content distribution, production trends, and content types between the two countries while demonstrating practical data and business analysis skills.<br/>
+
+             <br/>The dashboard was developed using Power BI, with Power Query applied for data cleaning and transformation processes. 
+             Python was additionally used to validate data results generated in Power Query and to support parts of the visualisation and analysis process. <br/>
+             <br/>The project explores key insights such as the Top 10 countries by content volume, total number of Netflix titles, distribution of Movies and TV Shows, and yearly content trends for both the United States and South Korea.
+</p>
+
+            <br/>
+
+            <img src="/picture/dashboard-1.jpeg" class="small-image" style="display: block; margin-left: auto; margin-right: auto; padding: 10px;">
+            <style>
+            .small-image {
+                width: 960px; 
+                height: auto; 
+                }
+                </style>
+
+<br/>
+                
+                <h2>Key Insights</h2>
+
+                <p>The dataset contains a total of <b>5,991</b> Netflix titles in 10 years (2011-2021), consisting of both Movies and TV Shows. 
+                    Movies represent the majority of the content category with <b>4,150</b> titles, while TV Shows account for <b>1,841</b> titles, 
+                    indicating that Netflix’s category during this period was heavily in a movie-oriented direction.
+<br/><br/>
+                    The United States dominates Netflix content production within the dataset, contributing approximately <b>2,878</b> titles, 
+                    significantly outperforming all other countries. India and the United Kingdom follow as secondary contributors, 
+                    while Japan and South Korea rank within the Top 10 countries despite having a substantially smaller content volume.
+<br/><br/>
+                    This highlights the strong influence of the US market on Netflix’s global content category and demonstrates 
+                    how Netflix content production has historically been concentrated in a small number of major entertainment markets.
+
+                </p>
+                
+<br/><br/>
+
+        <h2>USA vs South Korea: Content Trend Analysis (2011–2021) </h2>
+        <p>The content trend visualisation highlights a significant increase in Netflix productions between<b> 2015 and 2019</b>, 
+            with peak activity occurring around <b>2018–2019</b>. This growth reflects Netflix’s aggressive global expansion strategy 
+            and major investment in original content production during that period.
+<br/><br/>
+           The United States consistently maintained high production volumes across all years, 
+           while South Korea demonstrated gradual growth over time, indicating rising demand and international 
+           popularity of Korean media content.
+<br/><br/>
+           According to <a href="https://variety.com/2019/tv/news/netflix-more-2019-originals-than-entire-tv-industry-in-2005-1203441709/" target="_blank"><b>Variety</b></a> , Netflix released 371 original TV shows and movies in 2019 alone, averaging more than one original title per day. 
+           The report also noted that Netflix produced more original content in 2019 than the entire US television industry produced in 2005. 
+           This demonstrates how rapidly Netflix expanded its production capacity during the rise of the global streaming market.
+<br/><br/>
+</p>
+ <img src="/picture/usa_vs_korea_trends_by_type.png" class="small-image" style="display: block; margin-left: auto; margin-right: auto; padding: 10px;">
+            <style>
+            .small-image {
+                width: 960px; 
+                height: auto; 
+                }
+                </style>
+                <br/>
+<p>The comparison between the United States and South Korea reveals a significant gap in total content volume:
+<br/><br/>
+          <ul><b>- United States: 2,878 titles</b></ul>
+          <ul><b>- South Korea: 223 titles</b></ul>
+<br/><br/>
+         <p> South Korean content began increasing more noticeably after 2016, which aligns with Netflix’s official launch in South Korea in January 2016. Following its market entry, Netflix increased investment in Korean entertainment content, contributing to the global rise of K-dramas and Korean media. Although the total number of South Korean titles remains significantly lower than the United States, the growth trend illustrates how South Korea became an increasingly important market within Netflix’s international content strategy.
+<br/><br/>
+This expansion can be observed in the steady rise of South Korean titles after 2016, reflecting both increased local production and growing international demand for Korean content. The trend supports how Netflix diversified its catalogue beyond traditional Western markets and strengthened its position through region-specific original programming and global content distribution.
+
+</p>
+
+<br/><br/>
+
+ <img src="/picture/dashboard-bi.jpeg" class="small-image" style="display: block; margin-left: auto; margin-right: auto; padding: 10px;">
+            <style>
+            .small-image {
+                width: 960px; 
+                height: auto; 
+                }
+                </style> <br/>
+
+<p>Additionally, this dashboard demonstrates not only data analysis and visualisation capabilities, but also UX/UI design principles in dashboard development. 
+    The interface was designed with a strong focus on readability, 
+    visual hierarchy, interactivity, and user experience to ensure insights can be understood quickly and efficiently.
+<br/><br/>
+The layout uses consistent colour themes inspired by Netflix branding, balanced spacing, and structured visual grouping to improve navigation and information flow. 
+cards, charts, and comparison sections were strategically positioned to guide users through the analysis logically and intuitively. 
+This approach highlights the ability to combine business analysis with user-centred design to create dashboards that are both analytical and visually engaging.
+</p>
+<br/><br/><br/>
+<p><small><b>Data Source:</b>
+Muhammad Shahzad. Netflix Content Analysis. Kaggle. Available at: https://www.kaggle.com/datasets/algozee/netflix-content-analysis. Accessed April 2026.
+</small></p>
+
+</div>
+    </div>
+
+
+
+    <script src="/script.js"></script>
+    <footer>
+        <div class="footer">
+            <p> Copyright © 2025 Sharlene Ruangsuwan</p>
+        </div>
+
+    </footer>
+</body>
+</html>
+
